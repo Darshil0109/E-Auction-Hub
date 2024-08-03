@@ -1,0 +1,48 @@
+# Python-related ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite3
+*.env
+venv/
+env/
+*.egg-info/
+dist/
+build/
+*.log
+
+# Django-related ignores
+db.sqlite3
+*.sqlite3
+*.log
+*.pot
+*.pyc
+__pycache__/
+media/
+staticfiles/
+static/
+
+# React-related ignores
+node_modules/
+build/
+*.log
+*.env
+
+# IDE and editor files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.lock
