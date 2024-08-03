@@ -30,7 +30,6 @@ E-Auction-HUB/
 │   ├── public/               # Static files like index.html
 │   ├── src/                  # React components and source files
 │   ├── package.json          # Node.js dependencies
-│   └── .env                  # Environment variables for React
 │
 └── README.md                 # This README file
 ```
