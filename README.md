@@ -43,7 +43,7 @@ E-Auction-HUB/
    Open Command Prompt (cmd) or PowerShell (Windows) or a terminal (Linux/Mac) and run:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Darshil0109/E-Auction-Hub.git
    cd E-Auction-HUB/backend
    ```
 
