@@ -1,13 +1,22 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Category
+from .models import Category,Item,Bid
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields=['id','category']
         
+class ItemModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Item
+        fields = ['id' , 'title', 'description' ,'category' , 'starting_bid' , 'image_url' ,'seller' , 'created_at','end_time','winner','status']
 
+
+class BidModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bid 
+        fields = ['id' , 'bid_amount' , 'bid_time', 'item_id', 'user_id']
 
 
 class UserSerializer(serializers.ModelSerializer):
