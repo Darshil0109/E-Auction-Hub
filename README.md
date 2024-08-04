@@ -131,5 +131,3 @@ E-Auction-HUB/
   ```bash
   pip install pillow
   ```
-
----
