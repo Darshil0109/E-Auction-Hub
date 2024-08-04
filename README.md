@@ -132,3 +132,4 @@ E-Auction-HUB/
   pip install pillow
   ```
 
+---
