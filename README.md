@@ -1,6 +1,4 @@
-
 ---
-
 # E-Auction HUB
 
 ## Overview
@@ -119,4 +117,18 @@ E-Auction-HUB/
 - **PUT /api/items/{id}/**: Update a specific auction item.
 - **DELETE /api/items/{id}/**: Delete a specific auction item.
 
----
+## Additional Notes
+
+- **Database Migrations**: Whenever there are changes to the database model or when registering a new model, remember to run migrations:
+
+  ```bash
+  python manage.py makemigrations
+  python manage.py migrate
+  ```
+
+- **Image Handling**: To handle images in the application, make sure to install the Pillow library:
+
+  ```bash
+  pip install pillow
+  ```
+
