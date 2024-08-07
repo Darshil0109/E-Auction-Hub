@@ -1,0 +1,47 @@
+.footer {
+    background-color: #003049; /* Dark background color */
+    color: #FFFCF2; /* Light text color */
+    padding: 40px 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-logo {
+    width: 120px; /* Adjust size of the logo */
+    height: auto;
+}
+
+.social-links a {
+    color: #FFFCF2;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-link {
+    color: #FFFCF2;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+.row > div {
+    margin-bottom: 20px;
+}
+
+.subscription-form .form-control {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 5px;
+}
+
+.subscription-form .btn {
+    background-color: #EB5E28;
+    color: #FFFCF2;
+    border: none;
+}
