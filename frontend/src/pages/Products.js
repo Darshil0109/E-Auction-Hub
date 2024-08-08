@@ -6,6 +6,7 @@ const Products = () => {
     const [timers, setTimers] = useState([]);
 
     useEffect(() => {
+        // Fetch only active items
         fetch('http://127.0.0.1:8000/api/items/', {
             method: 'GET',
             headers: {
@@ -14,7 +15,7 @@ const Products = () => {
             }
         })
         .then(resp => resp.json())
-        .then(resp => setProducts(resp))
+        .then(resp => setProducts(resp.filter((value)=>value.status==='active')))
         .catch(error => console.log(error));
     }, []);
 
@@ -25,6 +26,11 @@ const Products = () => {
                     const endTime = new Date(product.end_time).getTime();
                     const now = new Date().getTime();
                     const timeDifference = endTime - now;
+
+                    // Update status if time is up
+                    if (timeDifference <= 0 && product.status === 'active') {
+                        updateProductStatus(product);
+                    }
 
                     return {
                         id: product.id,
@@ -41,6 +47,37 @@ const Products = () => {
         }
     }, [products]);
 
+    const updateProductStatus = async (productValue) => {
+        const url = `http://127.0.0.1:8000/api/items/${productValue.id}/`;
+    
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: productValue.title,
+                description: productValue.description,
+                category: productValue.category, // Ensure this is the ID of the related Category object
+                starting_bid: productValue.starting_bid,
+                seller: productValue.seller, // Ensure this is the ID of the related Seller object
+                created_at: productValue.created_at,
+                end_time: productValue.end_time,
+                winner: productValue.winner, // Ensure this is the ID of the related Winner object if it's a foreign key
+                status: 'completed'
+            })
+        });
+    
+        if (response.ok) {
+            setProducts(products.filter(product => productValue.id !== product.id)); // Remove the completed item from state
+        } else {
+            const errorText = await response.text(); // Get more details about the error
+            console.error('Failed to update status:', response.status, response.statusText, errorText);
+        }
+    };
+    
+    
+
     const formatTime = (timeLeft) => {
         const seconds = Math.floor(timeLeft / 1000);
         const hours = Math.floor((seconds % (24 * 3600)) / 3600);
@@ -56,26 +93,29 @@ const Products = () => {
                 products.map((product) => {
                     const timer = timers.find(t => t.id === product.id);
                     const { hours, minutes, remainingSeconds } = timer ? formatTime(timer.timeLeft) : { hours: 0, minutes: 0, remainingSeconds: 0 };
-
                     return (
-                        <div className="card" key={product.id}>
-                            <div className="card-image-section">
-                                <img src={product.image_url} alt="product" className="card-img" />
-                                <div className="countdown-timer">
-                                    <CountdownTimer 
-                                        hours={hours} 
-                                        minutes={minutes} 
-                                        seconds={remainingSeconds} 
-                                    />
+                        <div key={product.id}>
+                            
+                            
+                            <div className="card">
+                                <div className="card-image-section">
+                                    <img src={product.image_url} alt="product" className="card-img" />
+                                    <div className="countdown-timer">
+                                        <CountdownTimer 
+                                            hours={hours} 
+                                            minutes={minutes} 
+                                            seconds={remainingSeconds} 
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="card-text-section">
-                                <p className="card-title">
-                                    {product.title}
-                                </p>
-                                <div className='bid-info'>
-                                    <p className="current-bid-text">Current Bid at:<br /><span className='price-tag'>1,500$</span> </p>
-                                    <button type="button" className="btn btn-primary view-auction-btn">View Auction</button>
+                                <div className="card-text-section">
+                                    <p className="card-title">
+                                        {product.title}
+                                    </p>
+                                    <div className='bid-info'>
+                                        <p className="current-bid-text">Current Bid at:<br /><span className='price-tag'>{product.starting_bid} ₹</span> </p>
+                                        <button type="button" className="btn btn-primary view-auction-btn">View Auction</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
