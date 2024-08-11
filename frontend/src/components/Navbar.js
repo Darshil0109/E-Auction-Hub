@@ -9,7 +9,7 @@ const Navbar = () => {
       <div style={{
         fontFamily: "Roboto",
     }}>
-        <div className="h-34 sm:h-30 md:h-28 lg:h-26  w-screen bg-dark-subtle-400 sticky flex justify-between px-8 py-3 items-center  z-50">
+        <div className="h-34 sm:h-30 md:h-28 lg:h-26 w-full lg:w-3/4 xl:w-8/12 m-auto bg-dark-subtle-400 sticky flex justify-between px-8 py-3 items-center  z-50">
         <div className="h-20 w-20 sm:h-26 sm:w-26 md:h-24 md:w-24 lg:h-22 lg:w-22" >
           <img src="./media/logo.png" alt="logo"/>
         </div>

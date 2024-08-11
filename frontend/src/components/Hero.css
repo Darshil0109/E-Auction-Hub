@@ -4,18 +4,17 @@ body {
     
 }
 
-.hero-div {
-    margin-top: 100px;
-}
+
 
 .hero-word {
-    color: #EB5E28;
+    /* color: #EB5E28; */
+    color: #F8961E;
 }
 
 .hero-title {
     font-size: 40px;
     font-weight: 600;
-    text-align: center;
+    
 }
 
 .hero-subtitle {
@@ -26,7 +25,7 @@ body {
 }
 
 .view-btn {
-    border: 1px solid #EB5E28;
+    border: 1px solid #F3722C;
 }
 
 .buttons {
