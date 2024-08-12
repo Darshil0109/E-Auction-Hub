@@ -1,158 +1,37 @@
-html {
-    font-size: 62.5%;
-}
-
-.products {
-    display: flex;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin: auto;
-    width: 80rem;
-    justify-content: space-evenly;
-}
-
-/* Card styling */
-.card {
-    height: auto;
-    width: 100%;
-    max-width: 25rem;
-    border: .1rem solid rgba(192, 182, 182, 0.144);
-    transition: transform 0.3s, box-shadow 0.3s;
-    margin: 1rem; /* Add margin for spacing */
-    box-sizing: border-box; /* Ensure padding/margins are included in width/height */
-    border-radius: .9rem;
-}
-
-.card-image-section {
-    height: 18rem;
-    width: 94%;
-    margin: 10px auto;
-    border-radius: .7rem;
-    position: relative;
+.icon {
+            
     overflow: hidden;
-}
-
-.card-img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: .7rem;
     position: relative;
-    z-index: 1; /* Ensure the image is above the image section */
-    transition: 0.2s transform ease-in-out;
-}
-
-.card:hover .card-img {
-    transform: scale(1.05); /* Apply zoom effect to the image */
     
 }
 
-.card:hover {
-    border-color: #eb5f2834;
-}
 
-.card:hover .countdown-timer {
-    opacity: 0;
-}
-
-.card:hover .view-auction-btn {
-    background-color: #eb5f28;
-    border-color: #eb5f28;
-}
-
-.countdown-timer {
-    background-color: rgba(240, 248, 255, 0.944);
-    height: 5rem;
-    width: 100%;
-    max-width: 18rem;
-    border-radius: 2rem;
-    display: flex;
-    justify-content: space-evenly;
+.icon::before {
+    content: '';
+    background: rgba(255, 255, 255, 0.4);
+    width: 70%;
+    height: 100%;
+    top: 0;
+    left: -200%;
+    transform: skew(-45deg);
     position: absolute;
-    bottom: 1rem; /* Position the timer at the bottom of the image section */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2; /* Ensure the timer is above the image */
-    transition: opacity 0.5s ease;
+    
+    z-index: 1;
 }
 
-.countdown-text {
-    font-weight: 700;
-    font-size: 2rem;
-    text-align: center;
-    align-content: center;
-    height: 2rem;
-    width: 5rem;
-    border-radius: .7rem;
+.card:hover .icon::before {
+    animation: shine .7s forwards;
 }
 
-.countdown-text p {
-    font-weight: 400;
-    font-size: 1.5rem;
-    margin-bottom: 0rem;
-}
-
-.card-text-section {
-    padding: 1rem;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-left: 1rem;
-}
-
-.bid-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.view-auction-btn {
-    height: 4rem;
-    transition: 0.4s ease-in-out;
-    font-size: 1.5rem;
-}
-
-.current-bid-text {
-    font-size: 1.2rem;
-}
-
-.price-tag {
-    font-size: 2rem;
-    font-weight: 600;
-}
-
-/* Responsive Styles */
-@media (max-width: 1200px) {
-    .products {
-        width: 90%;
+@keyframes shine {
+    0% {
+        left: -100%;
     }
-    .card {
-        max-width: 22rem;
+    100% {
+        left: 100%;
+        opacity: 0; /* Fade out */
     }
 }
-
-@media (max-width: 900px) {
-    .products {
-        width: 100%;
-    }
-    .card {
-        max-width: 30rem;
-        
-    }
-    .card-image-section {
-        height: 22rem;
-    }
-}
-
-
-
-@media (max-width: 600px) {
-    .card-image-section {
-        height: 30rem;
-    }
-    .card {
-        width: 30rem;
-    }
+.icon:hover img {
+    transform: scale(1.1);
 }

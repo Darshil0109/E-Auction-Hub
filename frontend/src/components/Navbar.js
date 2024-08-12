@@ -34,7 +34,7 @@ const Navbar = () => {
       </div>
       <div style={{backgroundColor:'#FFFCF2'}} className={`md:hidden w-full h-full  absolute flex flex-col  justify-around ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'} transition-transform duration-300 ease-in-out z-10`}>
         <ul className="flex flex-col items-center justify-content-evenly gap-5 top-30">
-          <li><a className="hover:text-gray-700 font-semibold text-4xl" href="/">Auctions</a></li>
+          <li><a className="hover:text-gray-700 font-semibold text-4xl" href="/products">Auctions</a></li>
           <li className="hover:text-gray-700 font-semibold text-4xl"><a href="/">About</a></li>
           <li className="hover:text-gray-700 font-semibold text-4xl"><a  href="/">Help</a></li>
           <li className="hover:text-gray-700 font-semibold text-4xl"><a  href="/">Contact</a></li>

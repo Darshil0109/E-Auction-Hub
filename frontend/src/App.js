@@ -6,12 +6,15 @@ import Products from './pages/Products';
 
 const App = () => {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/products" element={<Products />} />
-            </Routes>
-        </Router>
+        <>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<Landing />} />
+                    <Route path="/products" element={<Products />} />
+                </Routes>
+            </Router>
+            
+        </>
     );
 };
 
