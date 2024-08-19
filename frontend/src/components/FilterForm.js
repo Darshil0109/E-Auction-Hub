@@ -16,14 +16,15 @@ const FilterForm = (props) => {
     };
 
     return (
-        <div className='border-r-2 border-r-gray-500 w-full lg:w-1/5'>
-            {/* Toggle Button for screens <1024px */}
-            <button 
-                onClick={toggleMenu}
-                className="lg:hidden w-full text-white bg-purple-700 hover:bg-purple-800 focus:outline-none font-medium rounded-md text-xs px-3 py-1.5 mb-4"
-            >
+        <div className='w-full lg:w-1/5 bg-[#f3f4f6] items-center lg:border-none'>
+            <div className='float-right m-5'>
+            <button onClick={toggleMenu} className="lg:hidden w-full flex gap-2 items-center sm:w-28 m-0 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none font-medium rounded text-xs px-2 py-1.5 mb-4">
                 {isOpen ? 'Hide Filters' : 'Show Filters'}
+                <i class="fas fa-solid fa-sort-down"></i>
             </button>
+
+            </div>
+
             
             {/* Full Menu for screens >=1024px */}
             <div className={`lg:block ${isOpen ? 'block' : 'hidden'}`}>

@@ -3,7 +3,7 @@ import React from 'react';
 const Hero = () => {
   return (
     <>
-      <section className="bg-[#e5e5e5] pt-32 lg:pt-16  mt-12">
+      <section className="pt-32 lg:pt-16 ">
         <div className="container mx-auto flex flex-col-reverse   lg:flex-row items-center justify-center px-4">
           <div className="lg:w-1/2 text-center lg:text-left">
             <h1 className="text-5xl font-bold text-[#004E89] mb-4">
@@ -34,7 +34,7 @@ const Hero = () => {
         </div>
       </section>
 
-      <section className="py-16 bg-[#e5e5e5]">
+      <section className="py-16">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-[#004E89] mb-12">Features</h2>
           <div className="flex flex-wrap gap-8 justify-center">
@@ -57,7 +57,7 @@ const Hero = () => {
         </div>
       </section>
 
-      <section className="py-16 bg-[#e5e5e5]">
+      <section className="py-16 ">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold text-[#004E89] mb-12">What Our Users Say</h2>
           <div className="flex flex-wrap gap-8 justify-center">
