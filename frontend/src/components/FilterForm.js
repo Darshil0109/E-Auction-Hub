@@ -20,7 +20,7 @@ const FilterForm = (props) => {
             <div className='float-right m-5'>
             <button onClick={toggleMenu} className="lg:hidden w-full flex gap-2 items-center sm:w-28 m-0 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none font-medium rounded text-xs px-2 py-1.5 mb-4">
                 {isOpen ? 'Hide Filters' : 'Show Filters'}
-                <i class="fas fa-solid fa-sort-down"></i>
+                <i className="fas fa-solid fa-sort-down"></i>
             </button>
 
             </div>

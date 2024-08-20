@@ -7,15 +7,15 @@ const About = () => {
         <Navbar2  links={['','products','services','help']} navs={['Home','Auctions','Services','Help']}/>
         <div className="bg-gray-100 text-gray-800">
         {/* Hero Section */}
-        <section class="bg-gray-100 py-16 px-6 flex flex-col items-center text-center">
-    <div class="max-w-md">
-        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        <section className="bg-gray-100 py-16 px-6 flex flex-col items-center text-center">
+    <div className="max-w-md">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
         Welcome to E-Auction Hub
         </h1>
-        <p class="text-gray-600 mb-6">
+        <p className="text-gray-600 mb-6">
         Explore and bid on exclusive items from the comfort of your home. The best deals are just a click away.
         </p>
-        <a href="/auctions" class="inline-block bg-orange-500 text-white text-lg px-5 py-2 rounded-md hover:bg-orange-600 transition-all duration-300">
+        <a href="/auctions" className="inline-block bg-orange-500 text-white text-lg px-5 py-2 rounded-md hover:bg-orange-600 transition-all duration-300">
         Browse Auctions
         </a>
     </div>
