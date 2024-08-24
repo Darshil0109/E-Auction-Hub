@@ -1,11 +1,16 @@
 import axios from 'axios';
 // import { useState } from 'react';
-
+const apiToken = process.env.REACT_APP_API_TOKEN;
 const fetchAuctionItems = async () => {
     try {
-        const response = await axios.get('http://127.0.0.1:8000/api/items/');
+        const response = await axios.get('http://127.0.0.1:8000/api/items/',{
+            headers: {
+                'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
+            }
+        });
         const activeitems=response.data.filter((p)=> {return (p.status==='active' ? true:false)})
-
+        // console.log("Active Items",activeitems);
+        
         return activeitems; // Return the actual data
     } catch (error) {
         console.error('Error occurred while fetching auction items:', error);
@@ -16,7 +21,11 @@ const fetchAuctionItems = async () => {
 
 const fetchAuctionCategory = async () => {
     try {
-        const response = await axios.get('http://127.0.0.1:8000/api/category/');
+        const response = await axios.get('http://127.0.0.1:8000/api/category/',{
+            headers: {
+                'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
+            }
+        });
         return response.data; // Return the actual data
     } catch (error) {
         console.error('Error occurred while fetching Cateogries :', error);
@@ -44,7 +53,7 @@ const handleFilterSubmit = (data,products,categories,updateFilterData) =>{
            
         }
         if (data.auctiontimefilter && data.auctiontimefilter !== 'None') {
-            console.log(data.auctiontimefilter);
+            // console.log(data.auctiontimefilter);
             
             let filteredSeconds = Number(data.auctiontimefilter.split(" ")[0]) * 60 * 60;
             
@@ -71,7 +80,7 @@ const handleFilterSubmit = (data,products,categories,updateFilterData) =>{
 
 const updateProductStatus = async (product) => {
     try {
-        console.log("Product reached is ",await product);
+        // console.log("Product reached is ",await product);
         
         const response = await 
             axios.put(`http://127.0.0.1:8000/api/items/${product.id}/`, {
@@ -85,6 +94,10 @@ const updateProductStatus = async (product) => {
                 end_time: product.end_time,
                 winner: product.winner,  
                 status: 'completed'
+            }   ,{
+                headers: {
+                    'Authorization': `Token ${apiToken}`  
+                }
             });
         
         return response.data
@@ -95,4 +108,45 @@ const updateProductStatus = async (product) => {
     }
 };
 
-export { fetchAuctionItems,fetchAuctionCategory,handleFilterSubmit ,updateProductStatus};
+
+const loginUserData=async(email,password)=>{
+    try {
+        
+        const response = await axios.post('http://127.0.0.1:8000/auth/login/',{
+            'email':email,
+            'password':password,
+        },{
+            headers: {
+                'Authorization': `Token ${apiToken}`  
+            }
+        })
+        return response.status
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
+const signUpUserData= async(user)=>{
+    try {
+        const response = await axios.post('http://127.0.0.1:8000/auth/signup/',{
+            'username':user.username,
+            'password':user.password,
+            'firstname':user.firstname,
+            'lastname':user.lastname,
+            'email':user.email,
+        },{
+            headers: {
+                'Authorization': `Token ${apiToken}`  
+            }
+        })
+        return response.status
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+
+export { fetchAuctionItems,fetchAuctionCategory,handleFilterSubmit ,updateProductStatus,signUpUserData,loginUserData};

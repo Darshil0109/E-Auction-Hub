@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-
+import { signUpUserData } from '../services/apiServices';
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -11,13 +11,25 @@ const Signup = () => {
     const togglePasswordVisibility = () => {
         setPasswordVisible((prevState) => !prevState);
     };
-    const handleSignupSubmit = (event) => {
+    const handleSignupSubmit = async(event) => {
         event.preventDefault();
-        console.log(event.target.firstname.value);
-        console.log(event.target.lastname.value);
-        console.log(event.target.username.value);
-        console.log(event.target.email.value);
-        console.log(event.target.password.value);
+        let username=event.target.username.value
+        let email=event.target.email.value
+        let firstname=event.target.firstname.value
+        let lastname=event.target.lastname.value
+        let password=event.target.password.value
+        let status=await signUpUserData({
+            'username':username,
+            'email':email,
+            'firstname':firstname,
+            'lastname':lastname,
+            'password':password
+        })
+        if (status===201){
+            console.log("new user account created");
+
+        }
+        
     };
     return (
         <div>
@@ -47,7 +59,7 @@ const Signup = () => {
             <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900" >
              username
             </label>
-            <input type="text" id="username" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@flowbite.com" required />
+            <input type="text" id="username" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="johndoe123" required />
           </div>
             <div className="mb-5">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900" >

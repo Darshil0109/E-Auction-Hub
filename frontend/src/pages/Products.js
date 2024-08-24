@@ -24,24 +24,23 @@ const Productspage2 = () => {
                 if (categorydata.length !== 0  && data.length !==0){
                     setProducts(data)
                     setCategory(categorydata)
-    
                 }
-                setFetched(true)
-                
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-            finally {
-                setLoading(false); // End loading
-              }
         };
         loadData();
     }, []);
-
+    
     useEffect(()=>{
         // console.log("filterProduct changed");
-        setFilteredProducts(products)
-        handleFilterSubmit(filterCriteria,products,category,updateFilterData)
+        if (products.length!==0){
+
+            setFilteredProducts(products)
+            handleFilterSubmit(filterCriteria,products,category,updateFilterData)
+            setFetched(true)
+            setLoading(false); // End loading
+        }
         
     },[products,filterCriteria,category]);
 
@@ -118,13 +117,13 @@ const Productspage2 = () => {
         
         <div className='flex flex-col lg:flex-row justify-evenly items-center lg:items-start bg-[#f3f4f6]'>  
             <FilterForm products={products} categories={category} updateFilterData={updateFilterData} updateFilterCriteria={updateFilterCriteria}/>
-            
                 {loading ? (
                     [1,2,3,4].map((value)=>{
-                       return <CardSkeleton/>
+                       return <CardSkeleton key={value}/>
                     })
                     
                 ) :(fetched && filteredproducts.length === 0 ? (
+                    
                     <div className="border-l border-l-gray-500 flex w-full lg:w-4/5 h-screen justify-center items-center bg-gray-100">
                         <div className="flex flex-col items-center text-center">
                         <img src="./media/pagenotfound.png" alt="Product Not Found" className='h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96' />
@@ -136,14 +135,14 @@ const Productspage2 = () => {
                         </div>
                     </div>
                     ) : (
-                    <div className="border-l border-l-gray-500 w-full lg:w-4/5 min-h-screen px-4 py-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-3 justify-items-center">
+                    <div className="border-l border-l-gray-500 w-full lg:w-4/5 min-h-screen px-4 lg:px-2 py-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-3 justify-items-center">
                         {filteredproducts.map((product) => {
                             const timer = timers.find(t => t.id === product.id);
                             const { days, hours, minutes, remainingSeconds } = timer ? formatTime(timer.timeLeft) : { days: 0, hours: 0, minutes: 0, remainingSeconds: 0 };
 
                             return (
-                                <div key={product.id} className="w-full md:w-64 ">
-                                    <div className="card h-80 bg-white p-2 rounded-lg border border-gray-200 hover:border-orange-200 hover:cursor-pointer flex flex-col justify-evenly group">
+                                <div key={product.id} className="w-full md:w-full ">
+                                    <div className="card h-80 w-60 xl:w-72 xl:h-96  mx-auto bg-white p-2 rounded-lg border border-gray-200 hover:border-orange-200 hover:cursor-pointer flex flex-col justify-evenly group">
                                         <div className="relative overflow-hidden rounded-t-md h-48">
                                             <div className="bg-white absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-2 p-1 rounded-md z-10 group-hover:invisible transition-all duration-200 ease-in-out">
                                                 <div className="text-lg md:text-2xl font-bold flex flex-col justify-center">

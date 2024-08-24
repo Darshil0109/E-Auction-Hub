@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CardSkeleton = () => {
+const CardSkeleton = (props) => {
   return (
     <div className="w-full md:w-64">
         <div className="card h-80 p-2 rounded-lg border border-gray-200 flex flex-col justify-evenly animate-pulse">

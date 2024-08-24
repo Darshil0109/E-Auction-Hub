@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { loginUserData } from "../services/apiServices";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -12,10 +13,15 @@ const Login = () => {
     setPasswordVisible((prevState) => !prevState);
   };
 
-  const handleLoginSubmit = (event) => {
+  const handleLoginSubmit = async (event) => {
     event.preventDefault();
-    console.log(event.target.email.value);
-    console.log(event.target.password.value);
+    let email=event.target.email.value;
+    let password=event.target.password.value
+    let status=await loginUserData(email,password)
+    if (status===200){
+      console.log("User Login Successfully");
+    }
+    
   };
 
   return (
