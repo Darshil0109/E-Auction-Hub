@@ -1,16 +1,22 @@
 import axios from 'axios';
-// import { useState } from 'react';
 const apiToken = process.env.REACT_APP_API_TOKEN;
-const fetchAuctionItems = async () => {
+// const secretKey= process.env.REACT_APP_SECRET_KEY
+const fetchAuctionItems = async (setLoadingOff,setFetchedOn) => {
     try {
         const response = await axios.get('http://127.0.0.1:8000/api/items/',{
             headers: {
                 'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
             }
         });
-        const activeitems=response.data.filter((p)=> {return (p.status==='active' ? true:false)})
+        const activeitems=await response.data.filter((p)=> {return (p.status==='active' ? true:false)})
         // console.log("Active Items",activeitems);
+        console.log("request came to fetch data",activeitems);
         
+        setLoadingOff()
+        if (activeitems.length===0){
+
+            setFetchedOn()
+        }
         return activeitems; // Return the actual data
     } catch (error) {
         console.error('Error occurred while fetching auction items:', error);
@@ -120,7 +126,7 @@ const loginUserData=async(email,password)=>{
                 'Authorization': `Token ${apiToken}`  
             }
         })
-        return response.status
+        return response
     } catch (error) {
         console.log(error);
         
@@ -141,7 +147,9 @@ const signUpUserData= async(user)=>{
                 'Authorization': `Token ${apiToken}`  
             }
         })
-        return response.status
+        console.log(response);
+        
+        return response
     } catch (error) {
         console.log(error);
         

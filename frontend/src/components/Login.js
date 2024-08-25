@@ -17,9 +17,11 @@ const Login = () => {
     event.preventDefault();
     let email=event.target.email.value;
     let password=event.target.password.value
-    let status=await loginUserData(email,password)
-    if (status===200){
-      console.log("User Login Successfully");
+    let response=await loginUserData(email,password)
+    if (response.status===200){
+      localStorage.setItem('access_token', response.data.access);
+      console.log("User Login Successfully",response);
+      window.location.href='/'
     }
     
   };

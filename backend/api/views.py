@@ -5,9 +5,9 @@ from .models import Category, Item, Bid
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -22,7 +22,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemModelSerializer
-    authentication_classes = (TokenAuthentication,)
+    authentication_classes = (TokenAuthentication,) 
 
 class BidViewSet(viewsets.ModelViewSet):
     queryset = Bid.objects.all()
@@ -43,8 +43,14 @@ class LoginAuthTokenViewSet(APIView):
             return Response({"error": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
         user = authenticate(username=user.username, password=password)
         if user is not None:
-            
-            return Response("Login Successfully",status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            refresh['username'] = user.username
+            refresh['email'] = email
+            return Response({
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            })
+        
         else:
             return Response("Invalid email or password", status=status.HTTP_401_UNAUTHORIZED)
 
@@ -53,6 +59,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework.authentication import TokenAuthentication
+
+
 
 class SignupAuthTokenViewSet(APIView):
     
@@ -79,7 +87,13 @@ class SignupAuthTokenViewSet(APIView):
                 password=password,
             )
             if user:
-                return Response("Data Added Successfully", status=status.HTTP_201_CREATED)
+                refresh = RefreshToken.for_user(user)
+                refresh['username'] = username
+                refresh['email'] = email
+                return Response({
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token),
+                })
             else:
                 return Response("Invalid data Provided", status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:

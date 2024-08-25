@@ -18,16 +18,18 @@ const Signup = () => {
         let firstname=event.target.firstname.value
         let lastname=event.target.lastname.value
         let password=event.target.password.value
-        let status=await signUpUserData({
+        let response=await signUpUserData({
             'username':username,
             'email':email,
             'firstname':firstname,
             'lastname':lastname,
             'password':password
         })
-        if (status===201){
-            console.log("new user account created");
 
+        if (response.status===200){
+            localStorage.setItem('access_token', response.data.access);
+            window.location.href='/'
+            console.log("new user account created",response);
         }
         
     };

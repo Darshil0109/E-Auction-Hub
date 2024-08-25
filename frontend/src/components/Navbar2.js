@@ -1,6 +1,12 @@
 import React from 'react';
 
 const Navbar2 = (props) => {
+  const handleClick = () =>{
+    if (props.isAuthenticated) {
+      localStorage.removeItem('access_token')
+    }
+    
+  }
   return (
     <>
           <header className="shadow bg-white">
@@ -25,7 +31,9 @@ const Navbar2 = (props) => {
           <li className="text-gray-600 md:mr-12 hover:text-blue-600"><a href={`/${props.links[2]}`}>{props.navs[2]}</a></li>
           <li className="text-gray-600 md:mr-12 hover:text-blue-600"><a href={`/${props.links[3]}`}>{props.navs[3]}</a></li>
           <li className="text-gray-600 md:mr-12 hover:text-blue-600">
-            <a href="/auth/login"><button type="button" className="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Login </button></a>
+            {props.isAuthenticated ? (
+              <a href="/"><button type="button" className="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={()=>{handleClick()}}>Logout </button></a>)
+              :(<a href="/auth/login"><button type="button" className="px-5 py-2.5 text-sm font-medium text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" onClick={()=>{handleClick()}}>Login </button></a>)}
           </li>
         </ul>
       </nav>
