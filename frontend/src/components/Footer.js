@@ -15,22 +15,22 @@ const Footer = () => {
             <div>
               <h2 className="text-sm font-semibold text-[#004E89]">Resources</h2>
               <ul>
-                <li><a href="https://flowbite.com/" className="hover:underline">Flowbite</a></li>
+                <li><a href="/" className="hover:underline">SwiftBids</a></li>
                 <li><a href="https://tailwindcss.com/" className="hover:underline">Tailwind CSS</a></li>
               </ul>
             </div>
             <div>
               <h2 className="text-sm font-semibold text-[#004E89]">Follow us</h2>
               <ul>
-                <li><a href="https://github.com/themesberg/flowbite" className="hover:underline">Github</a></li>
-                <li><a href="https://discord.gg/4eeurUVvTy" className="hover:underline">Discord</a></li>
+                <li><a href="https://github.com/Darshil0109/E-Auction-Hub" className="hover:underline">Github</a></li>
+                <li><a href="https://discord.gg/CvWkHagN" className="hover:underline">Discord</a></li>
               </ul>
             </div>
             <div>
               <h2 className="text-sm font-semibold text-[#004E89]">Legal</h2>
               <ul>
                 <li><a href="/" className="hover:underline">Privacy Policy</a></li>
-                <li><a href="/" className="hover:underline">Terms & Conditions</a></li>
+                <li><a href="/terms" className="hover:underline">Terms & Conditions</a></li>
               </ul>
             </div>
           </div>

@@ -1,6 +1,4 @@
-body{
-    background-color: #ee6516;
-}
+
 .icon {
             
     overflow: hidden;
@@ -8,6 +6,14 @@ body{
     
 }
 
+.countdown-timer-fade {
+    opacity: 1;
+  }
+  
+  .card:hover .countdown-timer-fade {
+    opacity: 0;
+  }
+  
 
 .icon::before {
     content: '';

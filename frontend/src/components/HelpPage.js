@@ -4,7 +4,7 @@ import Navbar2 from './Navbar2';
 const HelpPage = () => {
   return (
     <div className='bg-[#f3f4f6]'>
-    <Navbar2 links={['','products','services','about']} navs={['Home','Products','Services','About']}/>
+    <Navbar2 links={['','products','services','about']} navs={['Home','Auctions','Services','About']}/>
     <main className="container bg-[#f3f4f6] mx-auto p-6 lg:p-12 bg-gray-100 font-sans">
       <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-6">Help Center</h1>
 

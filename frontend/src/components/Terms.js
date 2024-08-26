@@ -34,7 +34,7 @@ const Terms = () => {
       </p>
       <h2 className="text-xl font-semibold mt-4">7. Contact Us</h2>
       <p className="mb-4">
-        For questions or concerns, contact us at [Your Contact Information].
+        For questions or concerns, contact us at <a href='/' className='text-blue-800'>swiftbids123@gmail.com.</a>
       </p>
     </div>
   );

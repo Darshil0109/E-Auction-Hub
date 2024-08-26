@@ -15,7 +15,7 @@ const About = () => {
         <p className="text-gray-600 mb-6">
         Explore and bid on exclusive items from the comfort of your home. The best deals are just a click away.
         </p>
-        <a href="/auctions" className="inline-block bg-orange-500 text-white text-lg px-5 py-2 rounded-md hover:bg-orange-600 transition-all duration-300">
+        <a href="/products" className="inline-block bg-orange-500 text-white text-lg px-5 py-2 rounded-md hover:bg-orange-600 transition-all duration-300">
         Browse Auctions
         </a>
     </div>
@@ -101,7 +101,7 @@ const About = () => {
             <p className="text-lg lg:text-xl text-gray-600 mb-8">
             Become a part of our vibrant community of buyers and sellers. Experience the thrill of auctions and find unique products at unbeatable prices.
             </p>
-            <a href="/sign-up" className="px-6 py-3 bg-[#FF6B35] text-white rounded-md font-semibold text-lg hover:bg-[#1A659E] transition-all">
+            <a href="/auth/signup" className="px-6 py-3 bg-[#FF6B35] text-white rounded-md font-semibold text-lg hover:bg-[#1A659E] transition-all">
             Sign Up Today
             </a>
         </section>
