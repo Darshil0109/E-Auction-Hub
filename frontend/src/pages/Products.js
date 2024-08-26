@@ -1,82 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { fetchAuctionItems, fetchAuctionCategory, updateProductStatus, handleFilterSubmit } from '../services/apiServices';
+import { fetchAuctionItems, fetchAuctionCategory, updateProductStatus, handleFilterSubmit, isUserAuthenticated } from '../services/apiServices';
 import FilterForm from '../components/FilterForm';
 import Navbar2 from '../components/Navbar2';
 import Footer from '../components/Footer';
 import CardSkeleton from '../components/CardSkeleton';
+import './Products.css';
 
 const Productspage2 = () => {
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [timers, setTimers] = useState([]);
-    const [filterCriteria,setFilterCriteria] = useState({categoryselection: 'None', rangeofprice: '-1'})
+    const [filterCriteria, setFilterCriteria] = useState({ categoryselection: 'None', rangeofprice: '-1' });
     const [loading, setLoading] = useState(true);
     const [fetched, setFetched] = useState(false);
-    const [isAuthenticated, setAuthenticated] = useState(false);
-    const token = localStorage.getItem('access_token');
 
     useEffect(() => {
-        const getToken = () => {
-            if (token) {
-                try {
-                    setAuthenticated(true);
-                } catch (error) {
-                    console.error('Error decoding token:', error);
-                }
-            } else {
-                setAuthenticated(false);
-            }
-        };
-        getToken();
-    }, [token]);
-    
-    useEffect(() => {
-        const setLoadingOff=()=>{
-            setLoading(false)
-        }
-        const setFetchedOn=()=>{
-            setFetched(true)
-        }
         const loadData = async () => {
             try {
-                const data=await fetchAuctionItems(setLoadingOff,setFetchedOn)
-                const categorydata=await fetchAuctionCategory()
-                if (categorydata.length !== 0  && data.length !==0){
-                    setProducts(data)
-                    setCategory(categorydata)
+                const data = await fetchAuctionItems();
+                const categorydata = await fetchAuctionCategory();
+                if (categorydata.length !== 0 && data.length !== 0) {
+                    setProducts(data);
+                    setCategory(categorydata);
+                    setFilteredProducts(data);
+                    setLoading(false);
+                    setFetched(true);
+                } else {
+                    setLoading(false);
+                    setFetched(true);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setLoading(false);
+                setFetched(true);
             }
         };
         loadData();
     }, []);
-    
-
-
 
     useEffect(() => {
-        if (products.length !== 0) {
-            setFilteredProducts(products);
+        if (fetched) {
             handleFilterSubmit(filterCriteria, products, category, updateFilterData);
         }
-    },[products,filterCriteria,category]);
+    }, [fetched, filterCriteria, products, category]);
 
     const updateFilterData = (updatedData) => {
         setFilteredProducts(updatedData);
     };
 
-    
-    
     const changeStatus = async (product) => {
         const updatedData = await updateProductStatus(product);
         if (updatedData) {
-            setProducts((prevProducts) =>
-                prevProducts.filter((p) => p.id !== updatedData.id)
-            );
+            setProducts(prevProducts => prevProducts.filter(value => value.id !== updatedData.id));
         }
     };
+
     useEffect(() => {
         if (products.length > 0) {
             const updateTimers = () => {
@@ -95,14 +74,12 @@ const Productspage2 = () => {
                     };
                 }));
             };
-            updateTimers()
+            updateTimers();
             const intervalId = setInterval(updateTimers, 1000);
 
             return () => clearInterval(intervalId);
         }
     }, [products]);
-
-    
 
     const formatTime = (timeLeft) => {
         const totalSeconds = Math.floor(timeLeft / 1000);
@@ -117,17 +94,18 @@ const Productspage2 = () => {
     const updateFilterCriteria = (criteria) => {
         setFilterCriteria(criteria);
     };
+
     
-      
+    
     return (
         <>
-            <Navbar2 links={['', 'about', 'services', 'help']} navs={['Home', 'About', 'Services', 'Help']} isAuthenticated={isAuthenticated} />
+            <Navbar2 links={['', 'about', 'services', 'help']} navs={['Home', 'About', 'Services', 'Help']} isAuthenticated={isUserAuthenticated() ? true : false} />
             <div className='flex flex-col lg:flex-row justify-evenly items-center lg:items-start bg-[#f3f4f6]'>
                 <FilterForm products={products} categories={category} updateFilterData={updateFilterData} updateFilterCriteria={updateFilterCriteria} />
                 {loading ? (
-                    [1, 2, 3, 4].map((value) => {
-                        return <CardSkeleton key={value} />
-                    })
+                    [1, 2, 3, 4].map((value) => (
+                        <CardSkeleton key={value} />
+                    ))
                 ) : (fetched && filteredProducts.length === 0 ? (
                     <div className="border-l border-l-gray-500 flex w-full lg:w-4/5 h-screen justify-center items-center bg-gray-100">
                         <div className="flex flex-col items-center text-center">

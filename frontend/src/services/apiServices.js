@@ -1,7 +1,7 @@
 import axios from 'axios';
 const apiToken = process.env.REACT_APP_API_TOKEN;
 // const secretKey= process.env.REACT_APP_SECRET_KEY
-const fetchAuctionItems = async (setLoadingOff,setFetchedOn) => {
+const fetchAuctionItems = async () => {
     try {
         const response = await axios.get('http://127.0.0.1:8000/api/items/',{
             headers: {
@@ -10,13 +10,8 @@ const fetchAuctionItems = async (setLoadingOff,setFetchedOn) => {
         });
         const activeitems=await response.data.filter((p)=> {return (p.status==='active' ? true:false)})
         // console.log("Active Items",activeitems);
-        console.log("request came to fetch data",activeitems);
         
-        setLoadingOff()
-        if (activeitems.length===0){
-
-            setFetchedOn()
-        }
+        
         return activeitems; // Return the actual data
     } catch (error) {
         console.error('Error occurred while fetching auction items:', error);
@@ -151,10 +146,18 @@ const signUpUserData= async(user)=>{
         
         return response
     } catch (error) {
-        console.log(error);
-        
+        console.log(error);  
     }
 }
 
 
-export { fetchAuctionItems,fetchAuctionCategory,handleFilterSubmit ,updateProductStatus,signUpUserData,loginUserData};
+const isUserAuthenticated = ()=>{
+    try {
+        return localStorage.getItem('access_token') ? localStorage.getItem('access_token') : null
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+export { fetchAuctionItems,fetchAuctionCategory,handleFilterSubmit ,updateProductStatus,signUpUserData,loginUserData,isUserAuthenticated};
