@@ -1,10 +1,10 @@
 import React from 'react'
-import Navbar2 from './Navbar2'
+import Navbar from './Navbar';
 
 const Services = () => {
   return (
     <>
-    <Navbar2  links={['','products','about','help']} navs={['Home','Auctions','About','Help']}/>
+    <Navbar  links={['','products','about','help']} navs={['Home','Auctions','About','Help']}/>
     <section className="bg-[#f3f4f6] py-12">
   <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-12">

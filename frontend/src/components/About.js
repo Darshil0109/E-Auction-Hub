@@ -1,10 +1,11 @@
 import React from 'react';
-import Navbar2 from './Navbar2';
+import Navbar from './Navbar';
+
 
 const About = () => {
   return (
     <>
-        <Navbar2  links={['','products','services','help']} navs={['Home','Auctions','Services','Help']}/>
+        <Navbar  links={['','products','services','help']} navs={['Home','Auctions','Services','Help']}/>
         <div className="bg-gray-100 text-gray-800">
         {/* Hero Section */}
         <section className="bg-gray-100 py-16 px-6 flex flex-col items-center text-center">

@@ -18,10 +18,16 @@ const Login = () => {
     let email=event.target.email.value;
     let password=event.target.password.value
     let response=await loginUserData(email,password)
+    
     if (response.status===200){
       localStorage.setItem('access_token', response.data.access);
-      console.log("User Login Successfully",response);
       window.location.href='/'
+    }
+    else if (response.status === 401){
+      alert('Invalid Email-Id or Password');
+    }
+    else {
+      console.log("User Login Failed");
     }
     
   };

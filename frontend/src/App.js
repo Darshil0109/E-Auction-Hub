@@ -3,6 +3,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Landing from './pages/Landing';
 import Products from './pages/Products';
+import Profile from './pages/Profile';
 import About from './components/About';
 import Services from './components/Services';
 import HelpPage from './components/HelpPage';
@@ -24,7 +25,7 @@ const App = () => {
                     <Route path="/auth/login" element={<Login />} />
                     <Route path="/auth/signup" element={<Signup />} />
                     <Route path="/terms" element={<Terms />} />
-                    
+                    <Route path="/profile" element={<Profile />} />
                 </Routes>
             </Router>
         

@@ -1,10 +1,11 @@
 import React, { useState, useEffect,Suspense } from 'react';
 import { fetchAuctionItems, fetchAuctionCategory, updateProductStatus, handleFilterSubmit } from '../services/apiServices';
 import FilterForm from '../components/FilterForm';
-import Navbar2 from '../components/Navbar2';
+
 import Footer from '../components/Footer';
 import CardSkeleton from '../components/CardSkeleton';
 import './Products.css';
+import Navbar from '../components/Navbar';
 const Card = React.lazy(()=> import('../components/Card'));
 
 
@@ -100,7 +101,7 @@ const Productspage2 = () => {
     
     return (
         <>
-            <Navbar2 links={['', 'about', 'services', 'help']} navs={['Home', 'About', 'Services', 'Help']} />
+            <Navbar links={['', 'about', 'services', 'help']} navs={['Home', 'About', 'Services', 'Help']} />
             <div className='flex flex-col lg:flex-row justify-evenly items-center lg:items-start bg-[#f3f4f6]'>
                 <FilterForm products={products} categories={category} updateFilterData={updateFilterData} updateFilterCriteria={updateFilterCriteria} />
                 {(fetched && filteredProducts.length === 0 ? (
