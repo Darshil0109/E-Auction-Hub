@@ -95,6 +95,7 @@ class SignupAuthTokenViewSet(APIView):
                 refresh = RefreshToken.for_user(user)
                 refresh['username'] = username
                 refresh['email'] = email
+
                 return Response({
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),

@@ -31,7 +31,7 @@ const Navbar = (props) => {
       const userinfo=await getUserInfoById(user.user_id)
       setUserInfo(userinfo[0] || null)
     }
-    if (isUserAuthenticated) {
+    if (isUserAuthenticated()) {
       getData()
     }
   },[])

@@ -13,7 +13,7 @@ const Profile = () => {
   useEffect(() => {
     const getData = async () => {
       const token = localStorage.getItem("access_token");
-      const user = await fetchTokenData(token);
+      const user = fetchTokenData(token);
       const userinfo = await getUserInfoById(user.user_id);
       const data = await getUserById(user.user_id);
       const bids = await getBidsById(user.user_id);
@@ -115,7 +115,7 @@ const Profile = () => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">Address</dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{userInfo?.city || ''}{userInfo?.state || ''}{userInfo?.country || ''}{userInfo?.zipcode || 'N/A'}</dd>
+                      <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{userInfo?.city!=='N/A' || ''}{userInfo?.state!=='N/A' || ''}{userInfo?.country!=='N/A' || ''}{userInfo?.zipcode || 'N/A'}</dd>
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">BirthDate</dt>

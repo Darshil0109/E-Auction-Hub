@@ -1,5 +1,5 @@
 import React ,{useEffect, useState} from 'react'
-import { fetchAuctionCategory, fetchTokenData, getBidsById, getUserById, getUserInfoById, isUserAuthenticated } from '../services/apiServices';
+import { fetchTokenData,  getUserById, getUserInfoById, isUserAuthenticated } from '../services/apiServices';
 
 import axios from 'axios';
 const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -26,18 +26,33 @@ const InformationForm = () => {
     const handleSubmit = async (e) =>{
         e.preventDefault()
         
-        const data = {
-            "username" : e.target.username.value,
-            "first_name" : e.target.first_name.value,
-            "last_name" : e.target.last_name.value,
-            "email" : e.target.email.value,
-        }
+        // const data = {
+        //     "username" :"" ,
+        //     "first_name" : ,
+        //     "last_name" : e.target.last_name.value,
+        //     "email" : ,
+        //     "password" : "John$2004"
+        // }
         try {
-            
-            const response = await axios.post(
-                `http://127.0.0.1:8000/api/userinfo/`,
+            const userDataResponse=await axios.put(
+            `http://127.0.0.1:8000/api/users/${userData.id}/`,
                 {
-                  "user_id": userData.id,
+                  "username": e.target.username.value,
+                  "first_name": e.target.first_name.value,
+                  "last_name": e.target.last_name.value,
+                  "email": e.target.email.value,
+              },
+                {
+                    headers: {
+                        'Authorization': `Token ${apiToken}`,
+                        'Content-Type' : `multipart/form-data`
+                    }
+                }
+            );
+            const response = await axios.put(
+                `http://127.0.0.1:8000/api/userinfo/${userInfo.id}/`,
+                {
+                  "user_id": userInfo.user_id,
                   "profileimage_url": e.target.profileimage_url.files[0],
                   "mobile": e.target.mobile.value,
                   "dateofbirth": e.target.dateofbirth.value,
@@ -58,9 +73,9 @@ const InformationForm = () => {
                     }
                 }
             );
-    
-            const result = response.data; 
-            console.log(result); 
+            if (userDataResponse.status === 200 && response.status === 200) {
+              window.location.href='/profile'
+            }
         } catch (error) {
             console.error('Error updating user info:', error); // Improved error handling
         }

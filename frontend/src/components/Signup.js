@@ -1,5 +1,5 @@
 import React,{useEffect, useState} from 'react'
-import { getUsernames, signUpUserData } from '../services/apiServices';
+import { getUsernames, setDefaultUserInfo, signUpUserData } from '../services/apiServices';
 
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -85,6 +85,7 @@ const Signup = () => {
             })
     
             if (response.status===200){
+                setDefaultUserInfo(response.data.access)
                 localStorage.setItem('access_token', response.data.access);
                 window.location.href='/'
             }

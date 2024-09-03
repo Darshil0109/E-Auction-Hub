@@ -145,9 +145,11 @@ const signUpUserData= async(user)=>{
                 'Authorization': `Token ${apiToken}`  
             }
         })
+
         return response
     } catch (error) {
-        console.log(error.message);  
+        console.log(error.message); 
+        return error 
     }
 }
 
@@ -161,7 +163,7 @@ const isUserAuthenticated = ()=>{
     }
 }
 
-// fetch data from token using jwtDecode
+
 const fetchTokenData=(token)=>{
     return  jwtDecode(token)
 }
@@ -189,7 +191,6 @@ const getUserInfoById = async (id) => {
         
         // Assuming response.data is an array of user objects
         const userinfo = response.data.filter(value => value.user_id === id);
-        
         return userinfo;
     } catch (error) {
         console.log("error fetching users", error.message);
@@ -252,6 +253,37 @@ const getUsernames = async () =>{
         
     }
 }
+
+const setDefaultUserInfo = async (token) =>{
+    const user = fetchTokenData(token);
+    
+    const response = await axios.post(
+        `http://127.0.0.1:8000/api/userinfo/`,
+        {
+          "user_id": user.user_id,
+          "profileimage_url": "",
+          "mobile": "N/A",
+          "dateofbirth": "",
+          "city": "N/A",
+          "state": "N/A",
+          "country": "N/A",
+          "description": "N/A",
+          "gender": "N/A",
+          "address": "N/A",
+          "zipcode": "N/A",
+          "about_user": "N/A",
+          "joining_date": new Date().toISOString().split('T')[0],
+        },
+        {
+            headers: {
+                'Authorization': `Token ${apiToken}`,
+                'Content-Type' : `multipart/form-data`
+            }
+        }
+    );
+    return response.status
+}
+
 export { 
     fetchAuctionItems,
     fetchAuctionCategory,
@@ -267,4 +299,5 @@ export {
     getUserById,
     getBidsById,
     getItemById,
+    setDefaultUserInfo,
 };

@@ -8,7 +8,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.category
-    
+
 
 class Item(models.Model):
     title = models.CharField(max_length=200)
@@ -38,7 +38,7 @@ class UserInformation(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     profileimage_url = models.ImageField(upload_to='profile_images/', null=True, blank=True)
     mobile = models.CharField(max_length=20)
-    dateofbirth = models.DateField()
+    dateofbirth = models.DateField(null=True)
     address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)
@@ -47,5 +47,5 @@ class UserInformation(models.Model):
     description = models.TextField()
     about_user = models.CharField(max_length=10000)
     gender = models.CharField(max_length=10)
-    joining_date = models.DateField(default=timezone.now,null=True)
+    joining_date = models.DateField(default=timezone.now)
     
