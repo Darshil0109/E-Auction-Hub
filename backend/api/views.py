@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, CategorySerializer, ItemModelSerializer, BidModelSerializer
-from .models import Category, Item, Bid
+from .serializers import UserSerializer, CategorySerializer, ItemModelSerializer, BidModelSerializer , UserInfoSerializer
+from .models import Category, Item, Bid , UserInformation
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,6 +19,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     authentication_classes = (TokenAuthentication,)
 
+class UserInfoViewSet(viewsets.ModelViewSet):
+    queryset = UserInformation.objects.all()
+    serializer_class = UserInfoSerializer
+    authentication_classes = (TokenAuthentication,) 
+    
 class ItemViewSet(viewsets.ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemModelSerializer

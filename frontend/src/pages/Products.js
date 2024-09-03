@@ -1,5 +1,5 @@
 import React, { useState, useEffect,Suspense } from 'react';
-import { fetchAuctionItems, fetchAuctionCategory, updateProductStatus, handleFilterSubmit } from '../services/apiServices';
+import { fetchAuctionItems, fetchAuctionCategory, updateProductStatus, handleFilterSubmit} from '../services/apiServices';
 import FilterForm from '../components/FilterForm';
 
 import Footer from '../components/Footer';
@@ -19,6 +19,11 @@ const Productspage2 = () => {
     const [filterCriteria, setFilterCriteria] = useState({ categoryselection: 'None', rangeofprice: '-1' });
     
     const [fetched, setFetched] = useState(false);
+
+
+    
+
+
 
     useEffect(() => {
         const loadData = async () => {

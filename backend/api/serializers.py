@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Category,Item,Bid
+from .models import Category,Item,Bid , UserInformation
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,6 +17,16 @@ class BidModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bid 
         fields = ['id' , 'bid_amount' , 'bid_time', 'item_id', 'user_id']
+
+
+class UserInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserInformation
+        fields = [
+            'id', 'user_id', 'profileimage_url', 'mobile', 'dateofbirth',
+            'city', 'state', 'country', 'description', 'gender',
+            'address', 'zipcode', 'about_user', 'joining_date'
+        ]
 
 
 class UserSerializer(serializers.ModelSerializer):

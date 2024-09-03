@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 # Create your models here.
 class Category(models.Model):
@@ -33,3 +34,18 @@ class Bid(models.Model):
     item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
+class UserInformation(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    profileimage_url = models.ImageField(upload_to='profile_images/', null=True, blank=True)
+    mobile = models.CharField(max_length=20)
+    dateofbirth = models.DateField()
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=100)
+    state = models.CharField(max_length=100)
+    country = models.CharField(max_length=100)
+    zipcode = models.CharField(max_length=20)
+    description = models.TextField()
+    about_user = models.CharField(max_length=10000)
+    gender = models.CharField(max_length=10)
+    joining_date = models.DateField(default=timezone.now,null=True)
+    

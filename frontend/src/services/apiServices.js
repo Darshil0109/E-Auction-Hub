@@ -163,7 +163,7 @@ const isUserAuthenticated = ()=>{
 
 // fetch data from token using jwtDecode
 const fetchTokenData=(token)=>{
-    return jwtDecode(token)
+    return  jwtDecode(token)
 }
 
 const getUsers = async () =>{
@@ -179,6 +179,68 @@ const getUsers = async () =>{
     }
 }
 
+const getUserInfoById = async (id) => {
+    try {
+        const response = await axios.get('http://127.0.0.1:8000/api/userinfo/', {
+            headers: {
+                'Authorization': `Token ${apiToken}`  
+            }
+        });
+        
+        // Assuming response.data is an array of user objects
+        const userinfo = response.data.filter(value => value.user_id === id);
+        
+        return userinfo;
+    } catch (error) {
+        console.log("error fetching users", error.message);
+        return error;
+    }
+}
+const getUserById = async (id) => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/users/${id}/`, {
+            headers: {
+                'Authorization': `Token ${apiToken}`  
+            }
+        });
+        
+        return response.data;
+    } catch (error) {
+        console.log("error fetching users", error.message);
+        return error;
+    }
+}
+const getBidsById = async (id) => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/bids/`, {
+            headers: {
+                'Authorization': `Token ${apiToken}`  
+            }
+        });
+        const data=response.data
+        const sortedData = data.sort((a, b) => new Date(b.bid_time) - new Date(a.bid_time));
+        
+        return sortedData.filter((value)=>{return value.user_id === id ? true : false}).slice(0,3);
+    } catch (error) {
+        console.log("error fetching users", error.message);
+        return error;
+    }
+}
+const getItemById = async (id) => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/items/${id}/`, {
+            headers: {
+                'Authorization': `Token ${apiToken}`  
+            }
+        });
+        return response.data
+    } catch (error) {
+        console.log("error fetching users", error.message);
+        return error;
+    }
+}
+
+
 const getUsernames = async () =>{
     try{
         var users = await getUsers() 
@@ -190,4 +252,19 @@ const getUsernames = async () =>{
         
     }
 }
-export { fetchAuctionItems,fetchAuctionCategory,handleFilterSubmit ,updateProductStatus,signUpUserData,loginUserData,isUserAuthenticated,fetchTokenData,getUsernames};
+export { 
+    fetchAuctionItems,
+    fetchAuctionCategory,
+    handleFilterSubmit ,
+    updateProductStatus,
+    signUpUserData,
+    loginUserData,
+    isUserAuthenticated,
+    fetchTokenData,
+    getUsers,
+    getUsernames,
+    getUserInfoById,
+    getUserById,
+    getBidsById,
+    getItemById,
+};

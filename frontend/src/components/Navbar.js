@@ -1,15 +1,43 @@
-import React from 'react';
-import { isUserAuthenticated } from '../services/apiServices';
+import React, { useEffect, useState } from 'react';
+import { fetchTokenData, getUserInfoById, isUserAuthenticated } from '../services/apiServices';
+
 
 const Navbar = (props) => {
-    
   const handleClick = () => {
     if (props.isAuthenticated) {
       localStorage.removeItem('access_token');
     }
   };
+  
+  const [userInfo,setUserInfo] = useState({
+    "user_id": '',
+    "profileimage_url": "",
+    "mobile": "",
+    "dateofbirth": "",
+    "city": "",
+    "state": "",
+    "country": "",
+    "description": "",
+    "gender": "",
+    "address": "",
+    "zipcode": "",
+    "about_user": "",
+    "joining_date": ""
+  })
+  useEffect(()=>{
+    const getData = async()=>{
+      const token = localStorage.getItem("access_token");
+      const user = fetchTokenData(token);
+      const userinfo=await getUserInfoById(user.user_id)
+      setUserInfo(userinfo[0] || null)
+    }
+    if (isUserAuthenticated) {
+      getData()
+    }
+  },[])
+  
 
-  return (
+return (
     <header className="shadow bg-white">
       <div className="relative flex max-w-screen-xl flex-col overflow-hidden px-4 py-4 md:mx-auto md:flex-row md:items-center">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse w-16 lg:w-20">
@@ -35,8 +63,12 @@ const Navbar = (props) => {
               {isUserAuthenticated() ? (
                 
                 <a href='/profile'>
-                    <img src="./media/person1.jpg" alt="Profile" className="w-10 h-10 rounded-full"/>
-                </a>
+                  <img
+                      src={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : './media/defaultuser.png'} // URL returned from getData()
+                      alt="Profile"
+                      className="w-10 h-10 rounded-full"
+                  />
+              </a>
                 
               ) : (
                 <a href="/auth/login">
