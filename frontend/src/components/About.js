@@ -74,7 +74,7 @@ const About = () => {
                 <div className="flex flex-col items-center">
                 <img src="./media/person2.jpg" alt="Team Member" className="h-32 w-32 rounded-full mb-4 object-cover" />
                 <h3 className="text-xl font-semibold">John Smith</h3>
-                <p className="text-gray-600">CTO</p>
+                <p className="text-gray-600">Manager</p>
                 </div>
                 <div className="flex flex-col items-center">
                 <img src="./media/person4.jpg" alt="Team Member" className="h-32 w-32 rounded-full mb-4 object-cover" />

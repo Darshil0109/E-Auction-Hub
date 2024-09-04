@@ -30,7 +30,8 @@ const Productspage2 = () => {
             try {
                 const data = await fetchAuctionItems();
                 const categorydata = await fetchAuctionCategory();
-                if (categorydata.length !== 0 && data.length !== 0) {
+                if (categorydata.length !== 0 && data) {
+                    
                     setProducts(data);
                     setCategory(categorydata);
                     setFilteredProducts(data);
@@ -45,7 +46,6 @@ const Productspage2 = () => {
         };
         loadData();
     }, []);
-
     useEffect(() => {
         if (fetched) {
             handleFilterSubmit(filterCriteria, products, category, updateFilterData);

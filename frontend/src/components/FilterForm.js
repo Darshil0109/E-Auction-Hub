@@ -110,7 +110,7 @@ const FilterForm = (props) => {
                         <input 
                             type="submit" 
                             value="Apply Filters"  
-                            className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-md text-sm px-5 py-2.5 mb-2"
+                            className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-md text-sm px-5 py-2.5 mb-2"
                         />
                     </div>
                 </form>

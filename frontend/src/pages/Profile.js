@@ -140,21 +140,20 @@ const Profile = () => {
                   <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                       <tr>
-                        <th scope="col" className="px-4 py-3">Product name</th>
-                        <th scope="col" className="px-4 py-3">Category</th>
-                        <th scope="col" className="px-4 py-3">Bid Amount</th>
-                        <th scope="col" className="px-4 py-3">Date & Time</th>
-                        <th scope="col" className="px-4 py-3 text-right"><span className="sr-only">Edit</span></th>
+                        <th scope="col" className="px-4 py-3 ">Product name</th>
+                        <th scope="col" className="px-4 py-3 text-center">Category</th>
+                        <th scope="col" className="px-4 py-3 text-center">Bid Amount</th>
+                        <th scope="col" className="px-4 py-3 text-center">Date & Time</th>
                       </tr>
                     </thead>
                     <tbody>
                       {items && items.length > 0 ? (
                         items.map((item) => (
                           <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
-                            <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
-                            <td className="px-4 py-3">{getCategoryName(item.category)}</td>
-                            <td className="px-4 py-3">{getBidData(item.id).bid_amount}</td>
-                            <td className="px-4 py-3">{getBidData(item.id).bid_time}</td>
+                            <td className="flex px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">{item.title}</td>
+                            <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
+                            <td className="px-4 py-3 text-center">{getBidData(item.id).bid_amount}</td>
+                            <td className="px-4 py-3 text-center">{getBidData(item.id).bid_time}</td>
                             <td className="px-4 py-3 text-right">
                               <a href={`/item/${item.id}`} className="text-indigo-600 hover:text-indigo-900">View</a>
                             </td>

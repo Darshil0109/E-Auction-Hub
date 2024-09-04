@@ -44,8 +44,8 @@ class UserInformation(models.Model):
     state = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
     zipcode = models.CharField(max_length=20)
-    description = models.TextField()
-    about_user = models.CharField(max_length=10000)
+    description = models.CharField(max_length=1000)
+    about_user = models.TextField()
     gender = models.CharField(max_length=10)
     joining_date = models.DateField(default=timezone.now)
     

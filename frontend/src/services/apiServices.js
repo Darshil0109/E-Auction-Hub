@@ -45,6 +45,7 @@ const handleFilterSubmit = (data,products,categories,updateFilterData) =>{
        
         //filter products by perticular category if user Selected that category
         if (data.categoryselection !== 'None') {
+           
             let filtered_category_id = categories.find(filterCategory => filterCategory.category === data.categoryselection).id;
             updatedProducts = updatedProducts.filter(product => product.category === filtered_category_id);
         }
