@@ -61,9 +61,9 @@ const Profile = () => {
         navs={['Home', 'Auctions', 'Services', 'Help']} 
         profileImage={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : './media/defaultuser.png'} 
       />
-      <div className="bg-gray-100 min-h-screen mx-auto">
-        <div className="container mx-auto p-5">
-          <div className="md:flex no-wrap md:-mx-2">
+      <div className="bg-gray-100 min-h-screen">
+        <div className="p-2 w-full">
+          <div className="md:flex no-wrap w-full justify-around">
             {/* Left Side */}
             <div className="w-full md:w-3/12 md:mx-2 mb-4 md:mb-0">
               {/* Profile Card */}
@@ -82,7 +82,7 @@ const Profile = () => {
                   </p>
                 </div>
                 <ul className="bg-gray-50 mt-6 rounded-lg shadow-sm divide-y divide-gray-200">
-                  <li className="flex justify-between items-center py-3 px-4">
+                  <li className="flex justify-between items-center py-3 px-4 flex-col xl:flex-row">
                     <span className="text-gray-700">Member since</span>
                     <span className="text-gray-500">{userInfo?.joining_date || 'N/A'}</span>
                   </li>
@@ -91,7 +91,7 @@ const Profile = () => {
               {/* End of profile card */}
             </div>
             {/* Right Side */}
-            <div className="w-full md:w-9/12 md:mx-2 flex flex-col justify-center">
+            <div className="w-full md:w-8/12 md:mx-2 flex flex-col justify-center">
               {/* About Section */}
               <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
                 <div className="px-4 py-5 sm:px-6">
@@ -132,12 +132,12 @@ const Profile = () => {
               </div>
               {/* End of about section */}
 
-              <div className="bg-white shadow overflow-hidden sm:rounded-lg mb-4">
+              <div className="bg-white shadow overflow-x-auto  sm:rounded-lg mb-4 ">
                 <div className="px-4 py-5 sm:px-6">
                   <h3 className="text-lg leading-6 font-medium text-gray-900">Bid History</h3>
                 </div>
                 <div className="border-t border-gray-200">
-                  <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500">
+                  <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500 table-auto">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                       <tr>
                         <th scope="col" className="px-4 py-3 ">Product name</th>
@@ -150,7 +150,7 @@ const Profile = () => {
                       {items && items.length > 0 ? (
                         items.map((item) => (
                           <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
-                            <td className="flex px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">{item.title}</td>
+                            <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
                             <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
                             <td className="px-4 py-3 text-center">{getBidData(item.id).bid_amount}</td>
                             <td className="px-4 py-3 text-center">{getBidData(item.id).bid_time}</td>
@@ -169,7 +169,7 @@ const Profile = () => {
                 </div>
               </div>
 
-                        <div className="my-4"></div>
+                        
 
                         {/* Bid History */}
 
