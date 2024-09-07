@@ -3,9 +3,9 @@ import React , {Suspense} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const Landing = React.lazy(()=> import('./pages/Landing')) ;
 const Products = React.lazy(()=> import( './pages/Products'));
-const About = React.lazy(()=> import('./components/About') );
-const Services = React.lazy(()=> import('./components/Services') );
-const HelpPage = React.lazy(()=> import('./components/HelpPage')) ;
+const About = React.lazy(()=> import('./pages/About') );
+const Services = React.lazy(()=> import('./pages/Services') );
+const HelpPage = React.lazy(()=> import('./pages/HelpPage')) ;
 const Login = React.lazy(()=> import('./components/Login')) ;
 const Terms = React.lazy(()=> import('./components/Terms') )
 const Signup = React.lazy(()=> import('./components/Signup') );

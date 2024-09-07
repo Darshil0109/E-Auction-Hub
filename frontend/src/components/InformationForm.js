@@ -1,5 +1,5 @@
 import React ,{useEffect, useState} from 'react'
-import { fetchTokenData,  getUserById, getUserInfoById, isUserAuthenticated } from '../services/apiServices';
+import { fetchTokenData,  getUserById, getUserInfoById, getUsernames, isUserAuthenticated } from '../services/apiServices';
 
 import axios from 'axios';
 const apiToken = process.env.REACT_APP_API_TOKEN;
@@ -7,12 +7,18 @@ const InformationForm = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [userData, setUserData] = useState(null);
     const [fetched, setFetched] = useState(false);
+    const [usernameMessage, setUsernameMessage] = useState('');
+    const [usernames,setUsernames] = useState()
+    
+
     useEffect(() => {
         const getData = async () => {
           const token = localStorage.getItem("access_token");
           const user = fetchTokenData(token);
           const userinfo = await getUserInfoById(user.user_id);
           const data = await getUserById(user.user_id);
+          const fetchedUsernames = await getUsernames();
+          setUsernames(fetchedUsernames);
           setFetched(true);
           setUserData(data);
           setUserInfo(userinfo[0] || null); 
@@ -23,65 +29,106 @@ const InformationForm = () => {
         }
     }, []);
     
-    const handleSubmit = async (e) =>{
-        e.preventDefault()
-        
-        // const data = {
-        //     "username" :"" ,
-        //     "first_name" : ,
-        //     "last_name" : e.target.last_name.value,
-        //     "email" : ,
-        //     "password" : "John$2004"
-        // }
-        try {
-            const userDataResponse=await axios.put(
-            `http://127.0.0.1:8000/api/users/${userData.id}/`,
-                {
-                  "username": e.target.username.value,
-                  "first_name": e.target.first_name.value,
-                  "last_name": e.target.last_name.value,
-                  "email": e.target.email.value,
-              },
-                {
-                    headers: {
-                        'Authorization': `Token ${apiToken}`,
-                        'Content-Type' : `multipart/form-data`
-                    }
-                }
-            );
-            const response = await axios.put(
-                `http://127.0.0.1:8000/api/userinfo/${userInfo.id}/`,
-                {
-                  "user_id": userInfo.user_id,
-                  "profileimage_url": e.target.profileimage_url.files[0],
-                  "mobile": e.target.mobile.value,
-                  "dateofbirth": e.target.dateofbirth.value,
-                  "city": e.target.city.value,
-                  "state": e.target.state.value,
-                  "country": e.target.country.value,
-                  "description": e.target.description.value,
-                  "gender": e.target.gender.value,
-                  "address": e.target.address.value,
-                  "zipcode": e.target.zipcode.value,
-                  "about_user": e.target.about_user.value,
-                  "joining_date": userInfo.joining_date,
-                },
-                {
-                    headers: {
-                        'Authorization': `Token ${apiToken}`,
-                        'Content-Type' : `multipart/form-data`
-                    }
-                }
-            );
-            if (userDataResponse.status === 200 && response.status === 200) {
-              window.location.href='/profile'
-            }
-        } catch (error) {
-            console.error('Error updating user info:', error); // Improved error handling
+    const handleUsername = async(event)=>{
+        let username=event.target.value.toLowerCase()
+
+        if (username.indexOf(' ')!==-1){
+            setUsernameMessage('Space Not allowed')
+            
         }
+        else if(username==='' || username === userData.username){
+            setUsernameMessage('')
+        }
+        else{
+            setUsernameMessage(((usernames.has(username)) ? 'Username Already Taken' : (/^[a-zA-Z0-9@._-]{3,20}$/.test(username) ?'Username is Valid':'Username is Invalid'))) 
+        }
+      }
+
+
+    const handleSubmit = async (e) =>{
+        e.preventDefault()  
+        try {
+          let zipcode = e.target.zipcode.value.trim()
+          let username = e.target.username.value.trim()
+          let email = e.target.email.value.trim()
+          let mobile = e.target.mobile.value.trim()
+          
+          let validData = true
+
+          if (usernameMessage !== 'Username is Valid' && userData.username !== username)
+          {
+            e.target.username.value=""
+            validData=false
+          }
+          if (!(/^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+[.][a-zA-Z]{2,}$/.test(email)))
+          {
+            e.target.email.value=""
+            validData=false
+          }
+          if (!(/^\d{6}$/.test(zipcode)))
+          {
+            e.target.zipcode.value=""
+            validData = false
+          }
+          if (!(/^\d{10}$/.test(mobile)))
+          {
+            e.target.mobile.value=""
+            validData = false
+          }
+          if (validData){
+              const userDataResponse=await axios.put(
+              `http://127.0.0.1:8000/api/users/${userData.id}/`,
+                  {
+                    "username": e.target.username.value,
+                    "first_name": e.target.first_name.value,
+                    "last_name": e.target.last_name.value,
+                    "email": e.target.email.value,
+                },
+                  {
+                      headers: {
+                          'Authorization': `Token ${apiToken}`,
+                          'Content-Type' : `multipart/form-data`
+                      }
+                  }
+              );
+              const response = await axios.put(
+                  `http://127.0.0.1:8000/api/userinfo/${userInfo.id}/`,
+                  {
+                    "user_id": userInfo.user_id,
+                    "profileimage_url": e.target.profileimage_url.files[0],
+                    "mobile": e.target.mobile.value,
+                    "dateofbirth": e.target.dateofbirth.value,
+                    "city": e.target.city.value,
+                    "state": e.target.state.value,
+                    "country": e.target.country.value,
+                    "description": e.target.description.value,
+                    "gender": e.target.gender.value,
+                    "address": e.target.address.value,
+                    "zipcode": e.target.zipcode.value,
+                    "about_user": e.target.about_user.value,
+                    "joining_date": userInfo.joining_date,
+                  },
+                  {
+                      headers: {
+                          'Authorization': `Token ${apiToken}`,
+                          'Content-Type' : `multipart/form-data`
+                      }
+                  }
+              );
+              if (userDataResponse.status === 200 && response.status === 200) {
+                window.location.href='/profile'
+              }
+            }
+            else{
+              alert("Invalid Data")
+            }
+          } catch (error) {
+              console.error('Error updating user info:', error); // Improved error handling
+
+          }
         
     }
-
+  
   return (
     !fetched ? (<></>) : 
     (<div>
@@ -97,8 +144,10 @@ const InformationForm = () => {
         id="username"
         defaultValue={userData.username}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        onChange={handleUsername}
+        required
       />
+      <p className={`text-sm font-medium ${((usernameMessage==='Username is Valid') ? ' text-green-400' : 'text-red-400')} `}>{usernameMessage}</p>
     </div>
     <div className="mb-4">
       <label htmlFor="first_name" className="block text-gray-700 font-medium mb-2">
@@ -109,7 +158,7 @@ const InformationForm = () => {
         id="first_name"
         defaultValue={userData.first_name}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
     <div className="mb-4">
@@ -121,7 +170,7 @@ const InformationForm = () => {
         id="last_name"
         defaultValue={userData.last_name}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
     
@@ -134,7 +183,7 @@ const InformationForm = () => {
         id="email"
         defaultValue={userData.email}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
     
@@ -151,6 +200,7 @@ const InformationForm = () => {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
             accept="image/*"
             content='multipart/form-data'
+
         />
         </div>
     
@@ -163,32 +213,65 @@ const InformationForm = () => {
         id="mobile"
         defaultValue={userInfo?.mobile}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
 
-    <div className="mb-4">
-      <label htmlFor="gender" className="block text-gray-700 font-medium mb-2">
+    <label htmlFor="Male" className="block text-gray-700 font-medium mb-2">
         Gender
-      </label>
-      <input
-        type="text"
-        id="gender"
-        defaultValue={userInfo?.gender}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
-      />
+    </label>
+    <div className="mb-4 flex flex-col">
+      <div className='flex gap-2 items-center'>
+        <input
+          type="radio"
+          id="Male"
+          name = "gender"
+          value= "Male"
+          required
+          defaultChecked={userInfo ? userInfo.gender === "Male" : false}
+        />
+        <label htmlFor="Male" className="block text-gray-700 font-medium ">
+          Male
+        </label>
+      </div>
+      <div className='flex gap-2 items-center'>
+        <input
+          type="radio"
+          id="Female"
+          name = "gender"
+          value= "Female"
+          defaultChecked={userInfo ? userInfo.gender === "Female" : false}
+        />
+        <label htmlFor="Female" className="block text-gray-700 font-medium ">
+          Female
+        </label>
+      </div>
+      <div className='flex gap-2 items-center'>
+        <input
+          type="radio"
+          id="Others"
+          name = "gender"
+          value= "Others"
+          defaultChecked={userInfo ? userInfo.gender === "Others" : false}
+        />
+        <label htmlFor="Others" className="block text-gray-700 font-medium ">
+          Others
+        </label>
+      </div>
     </div>
     <div className="mb-4">
       <label htmlFor="dateofbirth" className="block text-gray-700 font-medium mb-2">
-        Date of Birth
+        Date of Birth (Select Only From DatePicker)
       </label>
+      
       <input
-        type="text"
+        type="date"
         id="dateofbirth"
-        defaultValue={userInfo?.dateofbirth}
+        name="dateofbirth"
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        max={new Date().toISOString().split('T')[0]}
+        defaultValue ={userInfo?.dateofbirth}
+        required
       />
     </div>
 
@@ -201,7 +284,7 @@ const InformationForm = () => {
         rows="4"
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
         defaultValue={userInfo?.address}
-        
+        required
       >
       </textarea>
     </div>
@@ -215,7 +298,7 @@ const InformationForm = () => {
         id="city"
         defaultValue={userInfo?.city}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
 
@@ -228,7 +311,7 @@ const InformationForm = () => {
         id="state"
         defaultValue={userInfo?.state}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
 
@@ -241,7 +324,7 @@ const InformationForm = () => {
         id="country"
         defaultValue={userInfo?.country}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
 
@@ -250,11 +333,11 @@ const InformationForm = () => {
         Zipcode
       </label>
       <input
-        type="text"
+        type="number"
         id="zipcode"
         defaultValue={userInfo?.zipcode}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       />
     </div>
 
@@ -267,7 +350,7 @@ const InformationForm = () => {
         rows="4"
         defaultValue={userInfo?.description}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
         
       >
        
@@ -283,7 +366,7 @@ const InformationForm = () => {
         rows="6"
         defaultValue={userInfo?.about_user}
         className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        
+        required
       >
         
       </textarea>

@@ -113,8 +113,7 @@ const Productspage2 = () => {
                     <div className="border-l border-l-gray-500 flex w-full lg:w-4/5 h-screen justify-center items-center bg-gray-100">
                         <div className="flex flex-col items-center text-center">
                             <img src="./media/pagenotfound.png" alt="Product Not Found" className='h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96' />
-                            <h1 className="text-4xl md:text-6xl lg:text-8xl font-extrabold text-gray-700">404</h1>
-                            <p className="text-lg md:text-xl lg:text-2xl font-medium text-gray-600 mb-6">Product Not Found</p>
+                            <p className="text-lg md:text-xl lg:text-4xl font-semibold text-gray-800 mb-6 ">Product Not Found</p>
                             <a href="/" className="px-4 py-2 font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-600 transition-all duration-200 ease-in-out">
                                 Go Home
                             </a>

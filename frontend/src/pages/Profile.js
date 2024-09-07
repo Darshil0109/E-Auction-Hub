@@ -154,9 +154,6 @@ const Profile = () => {
                             <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
                             <td className="px-4 py-3 text-center">{getBidData(item.id).bid_amount}</td>
                             <td className="px-4 py-3 text-center">{getBidData(item.id).bid_time}</td>
-                            <td className="px-4 py-3 text-right">
-                              <a href={`/item/${item.id}`} className="text-indigo-600 hover:text-indigo-900">View</a>
-                            </td>
                           </tr>
                         ))
                       ) : (
