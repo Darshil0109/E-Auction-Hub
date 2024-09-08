@@ -181,6 +181,19 @@ const getUsers = async () =>{
         console.log("error fetching users",error.message);  
     }
 }
+const getWonAuctions = async () =>{
+    try {
+        const response= await axios.get('http://127.0.0.1:8000/api/items/',{
+                headers: {
+                    'Authorization': `Token ${apiToken}`  
+                }
+        })
+        return response.data 
+    } catch (error) {
+        console.log("error fetching users",error.message);  
+    }
+}
+
 
 const getUserInfoById = async (id) => {
     try {
@@ -295,6 +308,7 @@ export {
     isUserAuthenticated,
     fetchTokenData,
     getUsers,
+    getWonAuctions,
     getUsernames,
     getUserInfoById,
     getUserById,

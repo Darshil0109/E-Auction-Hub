@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'; // Adjust the import according to your file structure
 import { useEffect, useState } from 'react';
-import { isUserAuthenticated, fetchTokenData, getUserInfoById, getUserById, getBidsById, getItemById, fetchAuctionCategory } from '../services/apiServices';
+import { isUserAuthenticated, fetchTokenData, getUserInfoById, getUserById, getBidsById, getItemById, fetchAuctionCategory, getWonAuctions } from '../services/apiServices';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -9,6 +9,7 @@ const Profile = () => {
   const [items, setItems] = useState([]);
   const [userBids, setBids] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [auctionsWon, setAuctionsWon] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -18,6 +19,10 @@ const Profile = () => {
       const data = await getUserById(user.user_id);
       const bids = await getBidsById(user.user_id);
       const categorydata = await fetchAuctionCategory();
+      var auctions = await getWonAuctions()
+      auctions=auctions.sort((a, b) => new Date(b.end_time) - new Date(a.end_time))
+      auctions=auctions.filter((value)=>{return value.winner===user.user_id}).slice(0,3);
+      setAuctionsWon(auctions);
       setCategories(categorydata);
       const items = await Promise.all(
         bids.map(async (bid) => {
@@ -130,60 +135,90 @@ const Profile = () => {
                   </dl>
                 </div>
               </div>
-              {/* End of about section */}
+              
 
               <div className="bg-white shadow overflow-x-auto  sm:rounded-lg mb-4 ">
-                <div className="px-4 py-5 sm:px-6">
-                  <h3 className="text-lg leading-6 font-medium text-gray-900">Bid History</h3>
-                </div>
-                <div className="border-t border-gray-200">
-                  <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500 table-auto">
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                      <tr>
-                        <th scope="col" className="px-4 py-3 ">Product name</th>
-                        <th scope="col" className="px-4 py-3 text-center">Category</th>
-                        <th scope="col" className="px-4 py-3 text-center">Bid Amount</th>
-                        <th scope="col" className="px-4 py-3 text-center">Date & Time</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items && items.length > 0 ? (
-                        items.map((item) => (
-                          <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
-                            <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
-                            <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
-                            <td className="px-4 py-3 text-center">{getBidData(item.id).bid_amount}</td>
-                            <td className="px-4 py-3 text-center">{getBidData(item.id).bid_time}</td>
-                          </tr>
-                        ))
-                      ) : (
+                  <div className="px-4 py-5 sm:px-6">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Bid History</h3>
+                  </div>
+                  <div className="border-t border-gray-200">
+                    <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500 table-auto">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
-                          <td colSpan="5" className="px-4 py-3 text-center">No bids found.</td>
+                          <th scope="col" className="px-4 py-3 ">Product name</th>
+                          <th scope="col" className="px-4 py-3 text-center">Category</th>
+                          <th scope="col" className="px-4 py-3 text-center">Bid Amount</th>
+                          <th scope="col" className="px-4 py-3 text-center">Date & Time</th>
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {items && items.length > 0 ? (
+                          items.map((item) => (
+                            <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
+                              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
+                              <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
+                              <td className="px-4 py-3 text-center">{getBidData(item.id).bid_amount}</td>
+                              <td className="px-4 py-3 text-center">{getBidData(item.id).bid_time}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="5" className="px-4 py-3 text-center">No bids found.</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+              <div className="bg-white shadow overflow-x-auto  sm:rounded-lg mb-4 ">
+                  <div className="px-4 py-5 sm:px-6">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Auction Wins</h3>
+                  </div>
+                  <div className="border-t border-gray-200">
+                    <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500 table-auto">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                          <th scope="col" className="px-4 py-3 ">Product name</th>
+                          <th scope="col" className="px-4 py-3 text-center">Category</th>
+                          <th scope="col" className="px-4 py-3 text-center">Starting Amount</th>
+                          <th scope="col" className="px-4 py-3 text-center">Final Amount</th>
+                          <th scope="col" className="px-4 py-3 text-center">Date & Time</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {auctionsWon && auctionsWon.length > 0 ? (
+                          auctionsWon.map((item) => (
+                            <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
+                              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
+                              <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
+                              <td className="px-4 py-3 text-center">{item.starting_bid}</td>
+                              <td className="px-4 py-3 text-center">{item.current_bid}</td>
+                              <td className="px-4 py-3 text-center">{item.end_time}</td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="5" className="px-4 py-3 text-center">No Auctions won.</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
               </div>
 
-                        
-
-                        {/* Bid History */}
-
-                        <div className="my-4"></div>
-                        <div className="flex justify-start mb-4 gap-3">
-                            <a href='/'>
-                              <button type="button" onClick={handleClick} className="h-12 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
-                                  Logout
-                              </button>
-                            </a>
-                            <a href='profile/edit'>
-                            <button type="button" className="h-12 focus:outline-none text-white bg-gray-800 hover:bg-gray-900  focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 ">Edit Profile</button>
-                            </a>
-                        </div>
-                        {/* End of Experience and education grid */}
-                    </div>
-                    </div>
+              <div className="my-4"></div>
+                <div className="flex justify-start mb-4 gap-3">
+                    <a href='/'>
+                      <button type="button" onClick={handleClick} className="h-12 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
+                          Logout
+                      </button>
+                    </a>
+                    <a href='profile/edit'>
+                    <button type="button" className="h-12 focus:outline-none text-white bg-gray-800 hover:bg-gray-900  focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 ">Edit Profile</button>
+                    </a>
+                </div>
+              </div>
+            </div>
         </div>
     </div>
 
