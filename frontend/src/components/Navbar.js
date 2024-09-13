@@ -40,7 +40,7 @@ return (
   <header className="shadow bg-slate-100/60 sticky top-0 z-50 backdrop-blur-[40px] backdrop-filter">
       <div className="relative flex max-w-screen-xl flex-col overflow-hidden px-4 py-4 md:mx-auto md:flex-row md:items-center">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse w-16 lg:w-20">
-          <img src="./media/logo.png" className="rounded-full w-full" alt="Logo" />
+          <img src="/media/logo.png" className="rounded-full w-full" alt="Logo" />
         </a>
         <a href="/" className="hidden lg:flex items-center whitespace-nowrap text-2xl font-bold">
           <span className="text-gray-700">SwiftBids</span>

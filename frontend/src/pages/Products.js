@@ -2,12 +2,12 @@ import React, { useState, useEffect,Suspense } from 'react';
 import { fetchAuctionItems, fetchAuctionCategory, updateProductStatus, handleFilterSubmit} from '../services/apiServices';
 import FilterForm from '../components/FilterForm';
 
+
 import Footer from '../components/Footer';
 import CardSkeleton from '../components/CardSkeleton';
 import './Products.css';
 import Navbar from '../components/Navbar';
 const Card = React.lazy(()=> import('../components/Card'));
-
 
 
 

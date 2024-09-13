@@ -1,6 +1,7 @@
 import React , {Suspense} from 'react';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProductDetails from './pages/ProductDetails';
 const Landing = React.lazy(()=> import('./pages/Landing')) ;
 const Products = React.lazy(()=> import( './pages/Products'));
 const About = React.lazy(()=> import('./pages/About') );
@@ -20,6 +21,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Landing />} />
                         <Route path="/products" element={<Products />} />
+                        <Route path="/products/:product_id" element={<ProductDetails/>} />
                         <Route path="/about" element={<About />} />
                         <Route path="/services" element={<Services />} />
                         <Route path="/help" element={<HelpPage />} />

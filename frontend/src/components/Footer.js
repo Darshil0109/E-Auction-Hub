@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row lg:justify-between">
           <div className="flex items-center mb-6 lg:mb-0">
             <a href="/" className="flex items-center">
-              <img src="./media/logo.png" className="h-16 mr-3" alt="Logo" />
+              <img src="/media/logo.png" className="h-16 mr-3" alt="Logo" />
               <span className="text-2xl font-semibold text-[#1A659E]">Swift Bids</span>
             </a>
           </div>

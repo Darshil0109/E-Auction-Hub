@@ -1,9 +1,13 @@
 import React from 'react';
 import '../pages/Products.css'
+import { useNavigate } from 'react-router-dom';
+
+
+
 const formatValue = (value) =>{
-    if (value >= 1000000){
-        value= (value/1000000)
-        return value + ' M'
+  if (value >= 1000000){
+    value= (value/1000000)
+    return value + ' M'
     }
     else if (value >= 1000){
         value= (value/1000)
@@ -15,6 +19,10 @@ const formatValue = (value) =>{
 }
 
 const Card = (props) => {
+  const navigate = useNavigate();
+  const handleProductDetails = (product) =>{
+    navigate(`/products/${product.id}`);
+  }
   return (
     <div className="card bg-white p-2 rounded-lg border border-gray-200 hover:border-orange-200 hover:cursor-pointer flex flex-col h-full group">
   <div className="relative overflow-hidden rounded-t-md h-48">
@@ -55,7 +63,7 @@ const Card = (props) => {
       <p className="text-xs sm:text-sm md:text-xs lg:text-sm font-bold opacity-40">Current bid at:</p>
       <p className="text-lg sm:text-xl md:text-2xl font-semibold">{formatValue(props.product.current_bid)} ₹</p>
     </div>
-    <button type="button" className="bg-gray-900 text-white h-10 w-28 rounded-md group-hover:bg-orange-500 transition-all duration-300">
+    <button type="button" onClick={()=> handleProductDetails(props.product)} className="bg-gray-900 text-white h-10 w-28 rounded-md group-hover:bg-orange-500 transition-all duration-300">
       View Auction
     </button>
   </div>
