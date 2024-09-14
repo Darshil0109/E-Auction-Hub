@@ -38,6 +38,22 @@ const fetchAuctionCategory = async () => {
     }
 };
 
+const getCategoryNameById = async (id) => {
+    try {
+        const response = await axios.get(`http://127.0.0.1:8000/api/category/${id}/`,{
+            headers: {
+                'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
+            }
+        });
+        
+        return response.data.category; 
+
+    } catch (error) {
+        console.error('Error occurred while getting Cateogry Name :', error);
+        throw error; 
+    }
+};
+
 
 const handleFilterSubmit = (data,products,categories,updateFilterData) =>{
     try {
@@ -96,6 +112,7 @@ const updateProductStatus = async (product) => {
                 starting_bid: product.starting_bid,
                 current_bid: product.current_bid,
                 seller: product.seller, 
+                bidder: product.bidder,
                 created_at: product.created_at,
                 end_time: product.end_time,
                 winner: product.winner,  
@@ -250,6 +267,9 @@ const getItemById = async (id) => {
         });
         return response.data
     } catch (error) {
+        if (error.response.status === 404) {
+            return []
+        }
         console.log("error fetching users", error.message);
         return error;
     }
@@ -298,9 +318,63 @@ const setDefaultUserInfo = async (token) =>{
     return response.status
 }
 
+const placeAuctionBid = async (product,bid_amount,userid) =>{
+    try {
+        
+        const response = await axios.put(`http://127.0.0.1:8000/api/items/${product.id}/`, {
+                title: product.title,
+                description: product.description,
+                category: product.category, 
+                starting_bid: product.starting_bid,
+                current_bid: bid_amount,
+                seller: product.seller,
+                bidder: userid, 
+                created_at: product.created_at,
+                end_time: product.end_time,
+                winner: product.winner,  
+                status: product.status
+            }   ,{
+                headers: {
+                    'Authorization': `Token ${apiToken}`  
+                }
+            });
+
+        
+        await addBidToModel(product,bid_amount,userid)
+        return response.data
+        
+    } catch (error) {
+        console.error('Error occurred while searching auction items :', error);
+        throw error; // Re-throw the error for handling in the calling code
+    }
+}
+const addBidToModel = async (product,bid_amount,userid) =>{
+    try {
+        
+        const response = await axios.post(`http://127.0.0.1:8000/api/bids/`, {
+                bid_amount: bid_amount,
+                bid_time: new Date().toISOString(),
+                item_id: product.id, 
+                user_id: userid
+            }   ,{
+                headers: {
+                    'Authorization': `Token ${apiToken}`  
+                }
+            });
+        
+        return response.data
+        
+    } catch (error) {
+        console.error('Error occurred while searching auction items :', error);
+        throw error; // Re-throw the error for handling in the calling code
+    }
+}
+
 export { 
     fetchAuctionItems,
+    placeAuctionBid,
     fetchAuctionCategory,
+    getCategoryNameById,
     handleFilterSubmit ,
     updateProductStatus,
     signUpUserData,

@@ -10,7 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ItemModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Item
-        fields = ['id' , 'title', 'description' ,'category' , 'starting_bid' , 'current_bid' , 'image_url' ,'seller' , 'created_at','end_time','winner','status']
+        fields = ['id' , 'title', 'description' ,'category' , 'bidder' , 'starting_bid' , 'current_bid' , 'image_url' ,'seller' , 'created_at','end_time','winner','status']
 
 
 class BidModelSerializer(serializers.ModelSerializer):

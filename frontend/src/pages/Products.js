@@ -7,11 +7,12 @@ import Footer from '../components/Footer';
 import CardSkeleton from '../components/CardSkeleton';
 import './Products.css';
 import Navbar from '../components/Navbar';
+
 const Card = React.lazy(()=> import('../components/Card'));
 
 
 
-const Productspage2 = () => {
+const Products = () => {
     const [products, setProducts] = useState([]);
     const [category, setCategory] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -63,6 +64,8 @@ const Productspage2 = () => {
         }
     };
 
+    
+    
     useEffect(() => {
         if (products.length > 0) {
             const updateTimers = () => {
@@ -142,4 +145,4 @@ const Productspage2 = () => {
         </>
     );
 };
-export default Productspage2;
+export default Products;

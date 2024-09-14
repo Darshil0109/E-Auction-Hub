@@ -18,6 +18,7 @@ class Item(models.Model):
     current_bid = models.DecimalField(max_digits=10, decimal_places=0 )
     image_url = models.ImageField(upload_to='auctionItemImages', blank=True, max_length=500)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items_for_sale')
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items_for_bid',default='2')
     created_at = models.DateTimeField()  # Allow user to provide this value
     end_time = models.DateTimeField()  # Allow user to provide this value
     winner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='won_items')
