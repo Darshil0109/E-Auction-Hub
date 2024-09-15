@@ -15,12 +15,12 @@ class Item(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     starting_bid = models.DecimalField(max_digits=10, decimal_places=0)
-    current_bid = models.DecimalField(max_digits=10, decimal_places=0 )
-    image_url = models.ImageField(upload_to='auctionItemImages', blank=True, max_length=500)
+    current_bid = models.DecimalField(max_digits=10, decimal_places=0,blank=True,null=True)
+    image_url = models.ImageField(upload_to='auctionItemImages/', blank=True, null = True)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items_for_sale')
-    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items_for_bid',default='2')
-    created_at = models.DateTimeField()  # Allow user to provide this value
-    end_time = models.DateTimeField()  # Allow user to provide this value
+    bidder = models.ForeignKey(User, on_delete=models.CASCADE, related_name='items_for_bid',blank=True,null=True)
+    created_at = models.DateTimeField(default=timezone.now)  
+    end_time = models.DateTimeField()
     winner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='won_items')
     status = models.CharField(max_length=20, choices=[
         ('active', 'Active'),

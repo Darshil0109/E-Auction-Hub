@@ -23,8 +23,15 @@ const ProductDetails = () => {
                 
                 const categoryName = await getCategoryNameById(product.category);
                 const seller = await getUserById(product.seller);
-                const winner = await getUserById(product.winner);
-                const bidder = await getUserById(product.bidder);
+                var winner = 0
+                var bidder = 0
+                if (product.winner){
+                    winner = await getUserById(product.winner);
+                }
+                if (product.bidder){
+                    bidder = await getUserById(product.bidder);
+
+                }
                 setProducts([product]);
                 setTimingProducts([product]);
                 setCategoryName(categoryName);
@@ -44,6 +51,7 @@ const ProductDetails = () => {
         if (updatedData) {
             setTimingProducts(prevProducts => prevProducts.filter(value => value.id !== updatedData.id));
             setProducts([updatedData])
+            window.location.reload()
         }
     };
     useEffect(() => {
@@ -105,6 +113,7 @@ const ProductDetails = () => {
         if (c){
             const updated_Data= await placeAuctionBid(product[0],e.target.bidValue.value,user.user_id)
             setProducts([updated_Data])
+            window.location.reload()
         }
     }
     
@@ -153,14 +162,29 @@ const ProductDetails = () => {
                                         
                                     </div> 
                                 </div>
-                                <div className='my-6 flex gap-3 items-center'>Starting Bid:<p className='sm:text-2xl sm:font-semibold line-through'>₹{product[0].starting_bid}</p></div>
-                                <div className='my-2 flex gap-3 items-center'>Current Bid:<p className='sm:text-3xl sm:font-semibold '>₹{product[0].current_bid}</p></div>
+                                {(product[0].current_bid) ? 
+                                    <>
+                                        <div className='my-6 flex gap-3 items-center'>Starting Bid:<p className='sm:text-2xl sm:font-semibold line-through'>₹{product[0].starting_bid}</p></div>
+                                        <div className='my-2 flex gap-3 items-center'>Current Bid:<p className='sm:text-3xl sm:font-semibold '>₹{product[0].current_bid}</p></div>
+                                    </>
+                                    :
+                                    <>
+                                        <div className='my-6 flex gap-3 items-center'>Starting Bid:<p className='sm:text-2xl sm:font-semibold'>₹{product[0].starting_bid}</p></div>
+                                    </>
+                                }
                                 {product[0].status !== 'active' ? (
                                     <></>
                                     ):(
                                         <form method="post" onSubmit={(e)=>handleBid(e)}>
                                             <label htmlFor="number-input" className="block mt-4 mb-2 text-sm font-black">Select Amount to Bid:</label>
-                                            <input type="number" id="number-input" name='bidValue' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " defaultValue={Math.floor(Number(product[0].current_bid) + (Number(product[0].starting_bid) * 0.05))} min={Math.floor(Number(product[0].current_bid) + (Number(product[0].starting_bid) * 0.05))} required />
+                                            <input type="number"
+                                                id="number-input"
+                                                name='bidValue'
+                                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  " 
+                                                defaultValue={(product[0].current_bid) ? Math.floor(Number(product[0].current_bid) + (Number(product[0].starting_bid) * 0.05)) : product[0].starting_bid}
+                                                min={(product[0].current_bid) ? Math.floor(Number(product[0].current_bid) + (Number(product[0].starting_bid) * 0.05)) : product[0].starting_bid}
+                                                required 
+                                            />
                                             <button type="submit" className='mt-5 focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2' >Place Bid</button>
                                             
                                         </form>

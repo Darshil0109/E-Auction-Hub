@@ -2,6 +2,7 @@ import React ,{useEffect, useState} from 'react'
 import { fetchTokenData,  getUserById, getUserInfoById, getUsernames, isUserAuthenticated } from '../services/apiServices';
 
 import axios from 'axios';
+import Navbar from './Navbar';
 const apiToken = process.env.REACT_APP_API_TOKEN;
 const InformationForm = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -132,256 +133,260 @@ const InformationForm = () => {
   return (
     !fetched ? (<></>) : 
     (<div>
+      <Navbar 
+          links={['', 'products', 'services', 'help']} 
+          navs={['Home', 'Auctions', 'Services', 'Help']} 
+          />
       <div className="max-w-2xl mx-auto bg-white p-8 shadow-md rounded-lg">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6">Profile Information</h2>
-  <form onSubmit={handleSubmit}>
-    <div className="mb-4">
-      <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
-        Username
-      </label>
-      <input
-        type="text"
-        id="username"
-        defaultValue={userData.username}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        onChange={handleUsername}
-        required
-      />
-      <p className={`text-sm font-medium ${((usernameMessage==='Username is Valid') ? ' text-green-400' : 'text-red-400')} `}>{usernameMessage}</p>
-    </div>
-    <div className="mb-4">
-      <label htmlFor="first_name" className="block text-gray-700 font-medium mb-2">
-        Firstname
-      </label>
-      <input
-        type="text"
-        id="first_name"
-        defaultValue={userData.first_name}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
-    <div className="mb-4">
-      <label htmlFor="last_name" className="block text-gray-700 font-medium mb-2">
-        Lastname
-      </label>
-      <input
-        type="text"
-        id="last_name"
-        defaultValue={userData.last_name}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
-    
-    <div className="mb-4">
-      <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-        Email
-      </label>
-      <input
-        type="email"
-        id="email"
-        defaultValue={userData.email}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
-    
-    
+          <form onSubmit={handleSubmit}>
+            <div className="mb-4">
+              <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                defaultValue={userData.username}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                onChange={handleUsername}
+                required
+              />
+              <p className={`text-sm font-medium ${((usernameMessage==='Username is Valid') ? ' text-green-400' : 'text-red-400')} `}>{usernameMessage}</p>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="first_name" className="block text-gray-700 font-medium mb-2">
+                Firstname
+              </label>
+              <input
+                type="text"
+                id="first_name"
+                defaultValue={userData.first_name}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="last_name" className="block text-gray-700 font-medium mb-2">
+                Lastname
+              </label>
+              <input
+                type="text"
+                id="last_name"
+                defaultValue={userData.last_name}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
+            
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                defaultValue={userData.email}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
+            
+            
 
-    <div className="mb-4">
-        <label htmlFor="profileimage_url" className="block text-gray-700 font-medium mb-2">
-            Profile Image
-        </label>
-        <input
-            type="file"
-            id="profileimage_url"
-            name="profileimage_url"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-            accept="image/*"
-            content='multipart/form-data'
+            <div className="mb-4">
+                <label htmlFor="profileimage_url" className="block text-gray-700 font-medium mb-2">
+                    Profile Image
+                </label>
+                <input
+                    type="file"
+                    id="profileimage_url"
+                    name="profileimage_url"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    accept="image/*"
+                    content='multipart/form-data'
 
-        />
-        </div>
-    
-    <div className="mb-4">
-      <label htmlFor="mobile" className="block text-gray-700 font-medium mb-2">
-        Mobile
-      </label>
-      <input
-        type="text"
-        id="mobile"
-        defaultValue={userInfo?.mobile}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
+                />
+                </div>
+            
+            <div className="mb-4">
+              <label htmlFor="mobile" className="block text-gray-700 font-medium mb-2">
+                Mobile
+              </label>
+              <input
+                type="text"
+                id="mobile"
+                defaultValue={userInfo?.mobile}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
 
-    <label htmlFor="Male" className="block text-gray-700 font-medium mb-2">
-        Gender
-    </label>
-    <div className="mb-4 flex flex-col">
-      <div className='flex gap-2 items-center'>
-        <input
-          type="radio"
-          id="Male"
-          name = "gender"
-          value= "Male"
-          required
-          defaultChecked={userInfo ? userInfo.gender === "Male" : false}
-        />
-        <label htmlFor="Male" className="block text-gray-700 font-medium ">
-          Male
-        </label>
-      </div>
-      <div className='flex gap-2 items-center'>
-        <input
-          type="radio"
-          id="Female"
-          name = "gender"
-          value= "Female"
-          defaultChecked={userInfo ? userInfo.gender === "Female" : false}
-        />
-        <label htmlFor="Female" className="block text-gray-700 font-medium ">
-          Female
-        </label>
-      </div>
-      <div className='flex gap-2 items-center'>
-        <input
-          type="radio"
-          id="Others"
-          name = "gender"
-          value= "Others"
-          defaultChecked={userInfo ? userInfo.gender === "Others" : false}
-        />
-        <label htmlFor="Others" className="block text-gray-700 font-medium ">
-          Others
-        </label>
-      </div>
-    </div>
-    <div className="mb-4">
-      <label htmlFor="dateofbirth" className="block text-gray-700 font-medium mb-2">
-        Date of Birth (Select Only From DatePicker)
-      </label>
-      
-      <input
-        type="date"
-        id="dateofbirth"
-        name="dateofbirth"
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        max={new Date().toISOString().split('T')[0]}
-        defaultValue ={userInfo?.dateofbirth}
-        required
-      />
-    </div>
+            <label htmlFor="Male" className="block text-gray-700 font-medium mb-2">
+                Gender
+            </label>
+            <div className="mb-4 flex flex-col">
+              <div className='flex gap-2 items-center'>
+                <input
+                  type="radio"
+                  id="Male"
+                  name = "gender"
+                  value= "Male"
+                  required
+                  defaultChecked={userInfo ? userInfo.gender === "Male" : false}
+                />
+                <label htmlFor="Male" className="block text-gray-700 font-medium ">
+                  Male
+                </label>
+              </div>
+              <div className='flex gap-2 items-center'>
+                <input
+                  type="radio"
+                  id="Female"
+                  name = "gender"
+                  value= "Female"
+                  defaultChecked={userInfo ? userInfo.gender === "Female" : false}
+                />
+                <label htmlFor="Female" className="block text-gray-700 font-medium ">
+                  Female
+                </label>
+              </div>
+              <div className='flex gap-2 items-center'>
+                <input
+                  type="radio"
+                  id="Others"
+                  name = "gender"
+                  value= "Others"
+                  defaultChecked={userInfo ? userInfo.gender === "Others" : false}
+                />
+                <label htmlFor="Others" className="block text-gray-700 font-medium ">
+                  Others
+                </label>
+              </div>
+            </div>
+            <div className="mb-4">
+              <label htmlFor="dateofbirth" className="block text-gray-700 font-medium mb-2">
+                Date of Birth (Select Only From DatePicker)
+              </label>
+              
+              <input
+                type="date"
+                id="dateofbirth"
+                name="dateofbirth"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                max={new Date().toISOString().split('T')[0]}
+                defaultValue ={userInfo?.dateofbirth}
+                required
+              />
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="address" className="block text-gray-700 font-medium mb-2">
-        Address
-      </label>
-      <textarea
-        id="address"
-        rows="4"
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        defaultValue={userInfo?.address}
-        required
-      >
-      </textarea>
-    </div>
+            <div className="mb-4">
+              <label htmlFor="address" className="block text-gray-700 font-medium mb-2">
+                Address
+              </label>
+              <textarea
+                id="address"
+                rows="4"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                defaultValue={userInfo?.address}
+                required
+              >
+              </textarea>
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="city" className="block text-gray-700 font-medium mb-2">
-        City
-      </label>
-      <input
-        type="text"
-        id="city"
-        defaultValue={userInfo?.city}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
+            <div className="mb-4">
+              <label htmlFor="city" className="block text-gray-700 font-medium mb-2">
+                City
+              </label>
+              <input
+                type="text"
+                id="city"
+                defaultValue={userInfo?.city}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="state" className="block text-gray-700 font-medium mb-2">
-        State
-      </label>
-      <input
-        type="text"
-        id="state"
-        defaultValue={userInfo?.state}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
+            <div className="mb-4">
+              <label htmlFor="state" className="block text-gray-700 font-medium mb-2">
+                State
+              </label>
+              <input
+                type="text"
+                id="state"
+                defaultValue={userInfo?.state}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="country" className="block text-gray-700 font-medium mb-2">
-        Country
-      </label>
-      <input
-        type="text"
-        id="country"
-        defaultValue={userInfo?.country}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
+            <div className="mb-4">
+              <label htmlFor="country" className="block text-gray-700 font-medium mb-2">
+                Country
+              </label>
+              <input
+                type="text"
+                id="country"
+                defaultValue={userInfo?.country}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="zipcode" className="block text-gray-700 font-medium mb-2">
-        Zipcode
-      </label>
-      <input
-        type="number"
-        id="zipcode"
-        defaultValue={userInfo?.zipcode}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      />
-    </div>
+            <div className="mb-4">
+              <label htmlFor="zipcode" className="block text-gray-700 font-medium mb-2">
+                Zipcode
+              </label>
+              <input
+                type="number"
+                id="zipcode"
+                defaultValue={userInfo?.zipcode}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="description" className="block text-gray-700 font-medium mb-2">
-        Description
-      </label>
-      <textarea
-        id="description"
-        rows="4"
-        defaultValue={userInfo?.description}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-        
-      >
-       
-      </textarea>
-    </div>
+            <div className="mb-4">
+              <label htmlFor="description" className="block text-gray-700 font-medium mb-2">
+                Description
+              </label>
+              <textarea
+                id="description"
+                rows="4"
+                defaultValue={userInfo?.description}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+                
+              >
+              
+              </textarea>
+            </div>
 
-    <div className="mb-4">
-      <label htmlFor="about_user" className="block text-gray-700 font-medium mb-2">
-        About
-      </label>
-      <textarea
-        id="about_user"
-        rows="6"
-        defaultValue={userInfo?.about_user}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-        required
-      >
-        
-      </textarea>
-    </div>
+            <div className="mb-4">
+              <label htmlFor="about_user" className="block text-gray-700 font-medium mb-2">
+                About
+              </label>
+              <textarea
+                id="about_user"
+                rows="6"
+                defaultValue={userInfo?.about_user}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              >
+                
+              </textarea>
+            </div>
 
 
-    <div className="mt-6 text-right">
-      <button
-        type="submit"
-        className="px-6 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 focus:outline-none"
-      >
-        Save Changes
-      </button>
-    </div>
-  </form>
+            <div className="mt-6 text-right">
+              <button
+                type="submit"
+                className="px-6 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 focus:outline-none"
+              >
+                Save Changes
+              </button>
+            </div>
+          </form>
 </div>
 </div>
 )

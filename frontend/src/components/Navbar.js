@@ -51,7 +51,7 @@ return (
                 
                 <a href='/profile'>
                   <img
-                      src={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : './media/defaultuser.png'} // URL returned from getData()
+                      src={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : '/media/defaultuser.png'} // URL returned from getData()
                       alt="Profile"
                       className="w-10 h-10 rounded-full"
                   />
@@ -73,7 +73,7 @@ return (
                 
                 <a href='/profile'>
                   <img
-                      src={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : './media/defaultuser.png'} // URL returned from getData()
+                      src={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : '/media/defaultuser.png'} // URL returned from getData()
                       alt="Profile"
                       className="w-10 h-10 rounded-full"
                   />

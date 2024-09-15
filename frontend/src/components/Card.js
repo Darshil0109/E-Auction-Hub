@@ -60,8 +60,17 @@ const Card = (props) => {
   <p className="text-md sm:text-lg md:text-xl px-2 truncate font-semibold">{props.product.title}</p>
   <div className="flex mt-2 justify-between items-center px-2">
     <div>
-      <p className="text-xs sm:text-sm md:text-xs lg:text-sm font-bold opacity-40">Current bid at:</p>
-      <p className="text-lg sm:text-xl md:text-2xl font-semibold">{formatValue(props.product.current_bid)} ₹</p>
+      {(props.product.current_bid) ? 
+        <>
+          <p className="text-xs sm:text-sm md:text-xs lg:text-sm font-bold opacity-40">Current bid at:</p>
+          <p className="text-lg sm:text-xl md:text-2xl font-semibold">{formatValue(props.product.current_bid)}₹ </p>
+        </> 
+        : 
+        <>
+          <p className="text-xs sm:text-sm md:text-xs lg:text-sm font-bold opacity-40">Starting bid at:</p>
+          <p className="text-lg sm:text-xl md:text-2xl font-semibold">{formatValue(props.product.starting_bid)}₹ </p>
+        </> 
+      }
     </div>
     <button type="button" onClick={()=> handleProductDetails(props.product)} className="bg-gray-900 text-white h-10 w-28 rounded-md group-hover:bg-orange-500 transition-all duration-300">
       View Auction

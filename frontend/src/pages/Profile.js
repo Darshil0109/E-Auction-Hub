@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'; // Adjust the import according to your file structure
 import { useEffect, useState } from 'react';
-import { isUserAuthenticated, fetchTokenData, getUserInfoById, getUserById, getBidsById, getItemById, fetchAuctionCategory, getWonAuctions } from '../services/apiServices';
+import { isUserAuthenticated, fetchTokenData, getUserInfoById, getUserById, getBidsById, getItemById, fetchAuctionCategory, getAuctions } from '../services/apiServices';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -10,6 +10,7 @@ const Profile = () => {
   const [userBids, setBids] = useState([]);
   const [categories, setCategories] = useState([]);
   const [auctionsWon, setAuctionsWon] = useState([]);
+  const [auctionsSold, setAuctionsSold] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
@@ -19,9 +20,11 @@ const Profile = () => {
       const data = await getUserById(user.user_id);
       const bids = await getBidsById(user.user_id);
       const categorydata = await fetchAuctionCategory();
-      var auctions = await getWonAuctions()
+      var auctions = await getAuctions()
       auctions=auctions.sort((a, b) => new Date(b.end_time) - new Date(a.end_time))
+      var soldAuctions=auctions.filter((value)=>{return value.seller===user.user_id}).slice(0,3);
       auctions=auctions.filter((value)=>{return value.winner===user.user_id}).slice(0,3);
+      setAuctionsSold(soldAuctions)
       setAuctionsWon(auctions);
       setCategories(categorydata);
       const items = await Promise.all(
@@ -46,9 +49,9 @@ const Profile = () => {
     return category ? category.category : 'Unknown Category';
   };
 
-  const getBidData = (id) => {
-    const bid = userBids.find((value) => value.item_id === id);
-    return bid || { bid_amount: 'N/A', bid_time: 'N/A' };
+  const getItemData = (id) => {
+    const bidItems = items.find((value) => value.id === id);
+    return bidItems || {};
   };
 
   const handleClick = () => {
@@ -64,7 +67,6 @@ const Profile = () => {
       <Navbar 
         links={['', 'products', 'services', 'help']} 
         navs={['Home', 'Auctions', 'Services', 'Help']} 
-        profileImage={userInfo && userInfo.profileimage_url ? userInfo.profileimage_url : './media/defaultuser.png'} 
       />
       <div className="bg-gray-100 min-h-screen">
         <div className="p-2 w-full">
@@ -152,13 +154,13 @@ const Profile = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {items && items.length > 0 ? (
-                          items.map((item) => (
-                            <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
-                              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
-                              <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
-                              <td className="px-4 py-3 text-center">{getBidData(item.id).bid_amount}</td>
-                              <td className="px-4 py-3 text-center">{getBidData(item.id).bid_time}</td>
+                        {userBids && userBids.length > 0 ? (
+                          userBids.map((bid) => (
+                            <tr key={bid.id} className="bg-white border-b hover:bg-gray-50">
+                              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{getItemData(bid.item_id).title}</td>
+                              <td className="px-4 py-3 text-center ">{getCategoryName(getItemData(bid.item_id).category)}</td>
+                              <td className="px-4 py-3 text-center">{bid.bid_amount}</td>
+                              <td className="px-4 py-3 text-center">{bid.bid_time}</td>
                             </tr>
                           ))
                         ) : (
@@ -172,7 +174,7 @@ const Profile = () => {
               </div>
               <div className="bg-white shadow overflow-x-auto  sm:rounded-lg mb-4 ">
                   <div className="px-4 py-5 sm:px-6">
-                    <h3 className="text-lg leading-6 font-medium text-gray-900">Auction Wins</h3>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Auctions Won</h3>
                   </div>
                   <div className="border-t border-gray-200">
                     <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500 table-auto">
@@ -205,6 +207,40 @@ const Profile = () => {
                     </table>
                   </div>
               </div>
+              <div className="bg-white shadow overflow-x-auto  sm:rounded-lg mb-4 ">
+                  <div className="px-4 py-5 sm:px-6">
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">Auctioned Items </h3>
+                  </div>
+                  <div className="border-t border-gray-200">
+                    <table className="border-t border-gray-200 min-w-full text-sm text-left text-gray-500 table-auto">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                          <th scope="col" className="px-4 py-3 ">Product name</th>
+                          <th scope="col" className="px-4 py-3 text-center">Category</th>
+                          <th scope="col" className="px-4 py-3 text-center">Current Bid</th>
+                          <th scope="col" className="px-4 py-3 text-center">view Auction</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {auctionsSold && auctionsSold.length > 0 ? (
+                          auctionsSold.map((item) => (
+                            <tr key={item.id} className="bg-white border-b hover:bg-gray-50">
+                              <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{item.title}</td>
+                              <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
+                              <td className="px-4 py-3 text-center">{(item.current_bid) ? item.current_bid: 'N/A'}</td>
+                              
+                              <td className="px-4 py-3 text-center"><a href={`products/${item.id}`}>View</a></td>
+                            </tr>
+                          ))
+                        ) : (
+                          <tr>
+                            <td colSpan="5" className="px-4 py-3 text-center">You haven't Added any items to be Auctioned</td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
 
               <div className="my-4"></div>
                 <div className="flex justify-start mb-4 gap-3">
@@ -215,6 +251,9 @@ const Profile = () => {
                     </a>
                     <a href='profile/edit'>
                     <button type="button" className="h-12 focus:outline-none text-white bg-gray-800 hover:bg-gray-900  focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 ">Edit Profile</button>
+                    </a>
+                    <a href='/createauction'>
+                    <button type="button" className="h-12 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm  px-5 py-2.5 ">Create Auction</button>
                     </a>
                 </div>
               </div>

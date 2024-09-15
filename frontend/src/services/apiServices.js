@@ -115,7 +115,7 @@ const updateProductStatus = async (product) => {
                 bidder: product.bidder,
                 created_at: product.created_at,
                 end_time: product.end_time,
-                winner: product.winner,  
+                winner: product.bidder,  
                 status: 'completed'
             }   ,{
                 headers: {
@@ -198,7 +198,7 @@ const getUsers = async () =>{
         console.log("error fetching users",error.message);  
     }
 }
-const getWonAuctions = async () =>{
+const getAuctions = async () =>{
     try {
         const response= await axios.get('http://127.0.0.1:8000/api/items/',{
                 headers: {
@@ -210,6 +210,7 @@ const getWonAuctions = async () =>{
         console.log("error fetching users",error.message);  
     }
 }
+
 
 
 const getUserInfoById = async (id) => {
@@ -370,6 +371,37 @@ const addBidToModel = async (product,bid_amount,userid) =>{
     }
 }
 
+const placeItemToAuction=async(item,sellerid)=>{
+    try {
+        console.log(typeof(item.image_url))
+        const response = await axios.post(`http://127.0.0.1:8000/api/items/`, {
+                "title": item.title,
+                "description": item.description,
+                "category": item.category,
+                "bidder": "",
+                "starting_bid": item.starting_bid,
+                "current_bid": "",
+                "image_url": item.image_url,
+                "seller": sellerid,
+                "created_at": new Date().toISOString(),
+                "end_time": item.end_time,
+                "winner": "",
+                "status": "active"
+            }   ,{
+                headers: {
+                    'Authorization': `Token ${apiToken}`,
+                    'Content-Type' : `multipart/form-data`
+                }
+            });
+        
+        return response.data
+        
+    } catch (error) {
+        console.error('Error occurred while searching auction items :', error);
+        throw error; 
+    }
+}
+
 export { 
     fetchAuctionItems,
     placeAuctionBid,
@@ -382,11 +414,12 @@ export {
     isUserAuthenticated,
     fetchTokenData,
     getUsers,
-    getWonAuctions,
+    getAuctions,
     getUsernames,
     getUserInfoById,
     getUserById,
     getBidsById,
     getItemById,
     setDefaultUserInfo,
+    placeItemToAuction
 };

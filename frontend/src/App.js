@@ -2,6 +2,7 @@ import React , {Suspense} from 'react';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductDetails from './pages/ProductDetails';
+import ProductForm from './components/ProductForm';
 const Landing = React.lazy(()=> import('./pages/Landing')) ;
 const Products = React.lazy(()=> import( './pages/Products'));
 const About = React.lazy(()=> import('./pages/About') );
@@ -32,6 +33,10 @@ const App = () => {
                         <Route path="/profile/edit" element={
                             <Suspense fallback={<></>}>
                                 <InformationForm/>    
+                            </Suspense>} />
+                        <Route path="/createauction" element={
+                            <Suspense fallback={<></>}>
+                                <ProductForm/>    
                             </Suspense>} />
                     </Routes>
                 </Suspense>
