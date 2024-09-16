@@ -129,6 +129,11 @@ To run this project, you will need to add the following environment variables to
 ```http
 localhost:8000/
 ```
+### Admin Panel
+- **URL:** `/admin/`
+- **Description:** Manage Database and Models.
+
+  
 ### Login
 - **URL:** `/auth/login/`
 - **View:** `LoginAuthTokenViewSet`
