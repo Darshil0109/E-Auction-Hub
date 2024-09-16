@@ -3,6 +3,7 @@ import { fetchTokenData,  getUserById, getUserInfoById, getUsernames, isUserAuth
 
 import axios from 'axios';
 import Navbar from './Navbar';
+import { Navigate } from 'react-router-dom';
 const apiToken = process.env.REACT_APP_API_TOKEN;
 const InformationForm = () => {
     const [userInfo, setUserInfo] = useState(null);
@@ -30,6 +31,9 @@ const InformationForm = () => {
         }
     }, []);
     
+    if (!isUserAuthenticated()) {
+      return <Navigate to="/auth/login" />;
+    }
     const handleUsername = async(event)=>{
         let username=event.target.value.toLowerCase()
 

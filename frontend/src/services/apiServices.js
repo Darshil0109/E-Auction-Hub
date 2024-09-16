@@ -70,7 +70,12 @@ const handleFilterSubmit = (data,products,categories,updateFilterData) =>{
         if (data.rangeofprice !== '-1') {
             let minRange = Number(data.rangeofprice);
             let maxRange = Number(data.rangeofprice) + 500;
-            updatedProducts = updatedProducts.filter(product => product.current_bid >= minRange && product.current_bid <= maxRange);
+            if (maxRange === 10000){
+                updatedProducts = updatedProducts.filter(product => product.current_bid >= minRange);
+            }
+            else{
+                updatedProducts = updatedProducts.filter(product => product.current_bid >= minRange && product.current_bid <= maxRange);
+            }
            
         }
 

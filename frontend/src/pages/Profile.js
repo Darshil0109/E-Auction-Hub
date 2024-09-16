@@ -185,6 +185,7 @@ const Profile = () => {
                           <th scope="col" className="px-4 py-3 text-center">Starting Amount</th>
                           <th scope="col" className="px-4 py-3 text-center">Final Amount</th>
                           <th scope="col" className="px-4 py-3 text-center">Date & Time</th>
+                          <th scope="col" className="px-4 py-3 text-center">view Auction</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -196,6 +197,7 @@ const Profile = () => {
                               <td className="px-4 py-3 text-center">{item.starting_bid}</td>
                               <td className="px-4 py-3 text-center">{item.current_bid}</td>
                               <td className="px-4 py-3 text-center">{item.end_time}</td>
+                              <td className="px-4 py-3 text-center"><a href={`products/${item.id}`}>View</a></td>
                             </tr>
                           ))
                         ) : (
