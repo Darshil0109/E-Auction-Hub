@@ -1,17 +1,15 @@
----
-# E-Auction HUB
 
-## Overview
+# E-Auction Hub
 
-**E-Auction HUB** is a web application designed to facilitate online auctions. It leverages Django for a powerful backend and React for an interactive frontend, providing a seamless user experience for auction management and participation.
+The Auction website is a student-built project combining Django and React for a college assignment. It enables users to participate in live auctions, place bids, and manage their auction history. With Django handling the backend and React providing a smooth, responsive interface, the platform offers real-time bidding, product details, and user profiles. This project highlights the student’s full-stack development skills in creating a dynamic, user-friendly auction site.
 
-## Technologies Used
 
-- **Django**: A high-level Python web framework for rapid development and clean design.
-- **React**: A JavaScript library for building user interfaces, especially single-page applications.
-- **Django REST Framework**: A toolkit for building Web APIs in Django.
-- **Webpack**: A module bundler for JavaScript applications.
-- **Axios**: A promise-based HTTP client for making requests from the frontend.
+## Documentation
+
+- [React](https://react.dev/)
+- [Django](https://www.djangoproject.com/)
+- [djangorestframework](https://www.django-rest-framework.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Project Structure
 
@@ -32,9 +30,18 @@ E-Auction-HUB/
 └── README.md                 # This README file
 ```
 
-## Setup Instructions
 
-### Backend (Django)
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`REACT_APP_API_TOKEN` : 
+ token will be in Tokens model at `localhost:8000/admin` (Note : You have to create token for Superuser at admin panel and then you have to apply that token here)
+
+`REACT_APP_SECRET_KEY` : "you can use any string here for your key"
+
+
+## Installation
 
 1. **Clone the repository:**
 
@@ -45,7 +52,7 @@ E-Auction-HUB/
    cd E-Auction-HUB/backend
    ```
 
-2. **Create and activate a virtual environment:**
+4. **Create and activate a virtual environment:**
 
    - **Windows:**
 
@@ -61,25 +68,27 @@ E-Auction-HUB/
      source env/bin/activate
      ```
 
-3. **Install the required packages:**
+5. **Install the required packages:**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run migrations:**
+
+6. **Run migrations:**
 
    ```bash
+   python manage.py makemigrations
    python manage.py migrate
    ```
 
-5. **Create a superuser (optional but recommended):**
+7.  **Create a superuser:**
 
    ```bash
    python manage.py createsuperuser
    ```
-
-6. **Start the Django development server:**
+ 
+8. **Start the Django development server:**
 
    ```bash
    python manage.py runserver
@@ -109,25 +118,154 @@ E-Auction-HUB/
    npm start
    ```
 
+
+# API Documentation
+
+
+
+## Authentication Endpoints
+
+**Base URL**
+```http
+localhost:8000/
+```
+### Admin Panel
+- **URL:** `/admin/`
+- **Description:** Manage Database and Models.
+
+  
+### Login
+- **URL:** `/auth/login/`
+- **View:** `LoginAuthTokenViewSet`
+- **Method:** POST
+- **Description:** Authenticate a user and receive an auth token.
+
+### Signup
+- **URL:** `/auth/signup/`
+- **View:** `SignupAuthTokenViewSet`
+- **Method:** POST
+- **Description:** Register a new user and receive an auth token.
+
 ## API Endpoints
 
-- **GET /api/items/**: Retrieve a list of auction items.
-- **POST /api/items/**: Create a new auction item.
-- **GET /api/items/{id}/**: Retrieve details of a specific auction item.
-- **PUT /api/items/{id}/**: Update a specific auction item.
-- **DELETE /api/items/{id}/**: Delete a specific auction item.
+### Users
+- **URL:** `/api/users/`
+- **View:** `UserViewSet`
+- **Methods:** GET, POST, PUT, DELETE
+- **Description:** CRUD operations for user management.
 
-## Additional Notes
+### Categories
+- **URL:** `/api/category/`
+- **View:** `CategoryViewSet`
+- **Methods:** GET, POST, PUT, DELETE
+- **Description:** CRUD operations for managing categories.
 
-- **Database Migrations**: Whenever there are changes to the database model or when registering a new model, remember to run migrations:
+### Items
+- **URL:** `/api/items/`
+- **View:** `ItemViewSet`
+- **Methods:** GET, POST, PUT, DELETE
+- **Description:** CRUD operations for managing items.
 
-  ```bash
-  python manage.py makemigrations
-  python manage.py migrate
-  ```
+### Bids
+- **URL:** `/api/bids/`
+- **View:** `BidViewSet`
+- **Methods:** GET, POST, PUT, DELETE
+- **Description:** CRUD operations for managing bids.
 
-- **Image Handling**: To handle images in the application, make sure to install the Pillow library:
+### User Info
+- **URL:** `/api/userinfo/`
+- **View:** `UserInfoViewSet`
+- **Methods:** GET, POST, PUT, DELETE
+- **Description:** CRUD operations for managing user information.
 
-  ```bash
-  pip install pillow
-  ```
+
+## Notes
+- All API endpoints (except login and signup) are managed by Django Rest Framework's DefaultRouter.
+- Authentication is required for all endpoints. Refer to the view implementations for details on permissions and authentication requirements.
+- Access all Endpoints with POSTMAN or any other API tester and give Authorization Header the value of SuperUser Token you get from Admin panel to access all endpoints
+- For detailed information on request/response formats and available actions, please refer to the individual ViewSet implementations.
+
+
+# React Router Endpoints 
+
+This document outlines the client-side routes defined in the React application using React Router.
+
+## Base URL
+
+```bash
+localhost:3000/
+```
+
+## Routes
+
+### Landing Page
+- **Path:** `/`
+- **Component:** `Landing`
+- **Description:** The main landing page of the application.
+
+### Products Page
+- **Path:** `/products`
+- **Component:** `Products`
+- **Description:** Displays a list or grid of products.
+
+### Product Details Page
+- **Path:** `/products/:product_id`
+- **Component:** `ProductDetails`
+- **Description:** Shows detailed information for a specific product. The `product_id` is a dynamic parameter.
+
+### About Page
+- **Path:** `/about`
+- **Component:** `About`
+- **Description:** Provides information about the company or application.
+
+### Services Page
+- **Path:** `/services`
+- **Component:** `Services`
+- **Description:** Outlines the services offered by the company or application.
+
+### Help Page
+- **Path:** `/help`
+- **Component:** `HelpPage`
+- **Description:** Offers help and support information for users.
+
+### Login Page
+- **Path:** `/auth/login`
+- **Component:** `Login`
+- **Description:** Allows users to log into their accounts.
+
+### Signup Page
+- **Path:** `/auth/signup`
+- **Component:** `Signup`
+- **Description:** Allows new users to create an account.
+
+### Terms Page
+- **Path:** `/terms`
+- **Component:** `Terms`
+- **Description:** Displays the terms and conditions or terms of service.
+
+### User Profile Page
+- **Path:** `/profile`
+- **Component:** `Profile`
+- **Description:** Shows the user's profile information.
+
+### Edit Profile Page
+- **Path:** `/profile/edit`
+- **Component:** `InformationForm`
+- **Description:** Allows users to edit their profile information.
+
+### Create Auction Page
+- **Path:** `/createauction`
+- **Component:** `ProductForm`
+- **Description:** Provides a form for users to create a new auction or product listing.
+
+## Notes
+- Some Endpoints only accessible by Authenticated User so it will Redirect to ```/auth/login``` if the endpoint requires Authentication
+## Authors
+
+- [@Darshil0109](https://github.com/Darshil0109)
+
+
+## Support
+
+For support or Any Help Related to Access Projects Repositories, email darshil01092004@gmail.com. Follow for More Such Amazing Projects
+
