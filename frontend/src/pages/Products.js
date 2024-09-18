@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import CardSkeleton from '../components/CardSkeleton';
 import './Products.css';
 import Navbar from '../components/Navbar';
+import { Link } from 'react-router-dom';
 
 const Card = React.lazy(()=> import('../components/Card'));
 
@@ -117,9 +118,9 @@ const Products = () => {
                         <div className="flex flex-col items-center text-center">
                             <img src="./media/pagenotfound.png" alt="Product Not Found" className='h-64 w-64 md:h-80 md:w-80 lg:h-96 lg:w-96' />
                             <p className="text-lg md:text-xl lg:text-4xl font-semibold text-gray-800 mb-6 ">Product Not Found</p>
-                            <a href="/" className="px-4 py-2 font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-600 transition-all duration-200 ease-in-out">
+                            <Link to="/" className="px-4 py-2 font-medium text-white bg-indigo-500 rounded-md hover:bg-indigo-600 transition-all duration-200 ease-in-out">
                                 Go Home
-                            </a>
+                            </Link>
                         </div>
                     </div>
                 ) : (

@@ -383,7 +383,8 @@ const InformationForm = () => {
 
 
             <div className="mt-6 text-right">
-              <button
+              
+              <button 
                 type="submit"
                 className="px-6 py-2 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 focus:outline-none"
               >

@@ -1,5 +1,6 @@
 import React,{useEffect, useState} from 'react'
 import { getUsernames, setDefaultUserInfo, signUpUserData } from '../services/apiServices';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -110,6 +111,7 @@ const Signup = () => {
         }
         
     };
+    
     return (
         <div>
         <div className="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -165,9 +167,9 @@ const Signup = () => {
                 className="ms-2 text-sm font-medium text-gray-900"
                 >
                 I accept the{" "}
-                <a href="/terms" className="text-blue-600 hover:underline">
+                <Link to="/terms" className="text-blue-600 hover:underline">
                     Terms and Conditions
-                </a>
+                </Link>
                 </label>
             </div>
             <button
@@ -182,9 +184,9 @@ const Signup = () => {
             </form>
             <p className="text-sm text-gray-600 text-center mt-6">
             Already have an account?{" "}
-            <a href="/auth/login" className="text-blue-600 hover:underline">
+            <Link to="/auth/login" className="text-blue-600 hover:underline">
                 Login
-            </a>
+            </Link>
             </p>
         </div>
         </div>

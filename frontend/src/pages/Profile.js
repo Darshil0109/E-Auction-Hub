@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Navbar from '../components/Navbar'; // Adjust the import according to your file structure
 import { useEffect, useState } from 'react';
 import { isUserAuthenticated, fetchTokenData, getUserInfoById, getUserById, getBidsById, getItemById, fetchAuctionCategory, getAuctions } from '../services/apiServices';
@@ -197,7 +197,7 @@ const Profile = () => {
                               <td className="px-4 py-3 text-center">{item.starting_bid}</td>
                               <td className="px-4 py-3 text-center">{item.current_bid}</td>
                               <td className="px-4 py-3 text-center">{item.end_time}</td>
-                              <td className="px-4 py-3 text-center"><a href={`products/${item.id}`}>View</a></td>
+                              <td className="px-4 py-3 text-center"><Link to={`/products/${item.id}`}>View</Link></td>
                             </tr>
                           ))
                         ) : (
@@ -231,7 +231,7 @@ const Profile = () => {
                               <td className="px-4 py-3 text-center ">{getCategoryName(item.category)}</td>
                               <td className="px-4 py-3 text-center">{(item.current_bid) ? item.current_bid: 'N/A'}</td>
                               
-                              <td className="px-4 py-3 text-center"><a href={`products/${item.id}`}>View</a></td>
+                              <td className="px-4 py-3 text-center"><Link to={`/products/${item.id}`}>View</Link></td>
                             </tr>
                           ))
                         ) : (
@@ -246,17 +246,17 @@ const Profile = () => {
 
               <div className="my-4"></div>
                 <div className="flex justify-start mb-4 gap-3">
-                    <a href='/'>
+                    <Link to='/'>
                       <button type="button" onClick={handleClick} className="h-12 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5">
                           Logout
                       </button>
-                    </a>
-                    <a href='profile/edit'>
+                    </Link>
+                    <Link to='/profile/edit'>
                     <button type="button" className="h-12 focus:outline-none text-white bg-gray-800 hover:bg-gray-900  focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 ">Edit Profile</button>
-                    </a>
-                    <a href='/createauction'>
+                    </Link>
+                    <Link to='/createauction'>
                     <button type="button" className="h-12 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm  px-5 py-2.5 ">Create Auction</button>
-                    </a>
+                    </Link>
                 </div>
               </div>
             </div>
