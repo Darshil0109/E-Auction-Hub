@@ -378,7 +378,6 @@ const addBidToModel = async (product,bid_amount,userid) =>{
 
 const placeItemToAuction=async(item,sellerid)=>{
     try {
-        console.log(typeof(item.image_url))
         const response = await axios.post(`http://127.0.0.1:8000/api/items/`, {
                 "title": item.title,
                 "description": item.description,
@@ -399,11 +398,11 @@ const placeItemToAuction=async(item,sellerid)=>{
                 }
             });
         
-        return response.data
+        return [response.data]
         
     } catch (error) {
         console.error('Error occurred while searching auction items :', error);
-        throw error; 
+        return []
     }
 }
 

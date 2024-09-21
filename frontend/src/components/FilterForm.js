@@ -16,7 +16,7 @@ const FilterForm = (props) => {
     };
 
     return (
-        <div className='w-full lg:w-1/5 bg-[#f3f4f6] items-center lg:border-none'>
+        <div className='w-full lg:w-1/5 bg-[#f3f4f6] items-center lg:border-none dark:bg-[#121212]'>
             <div className='float-right m-5'>
             <button onClick={toggleMenu} className="lg:hidden w-full flex gap-2 items-center sm:w-28 m-0 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none font-medium rounded text-xs px-2 py-1.5 mb-4">
                 {isOpen ? 'Hide Filters' : 'Show Filters'}
@@ -32,13 +32,13 @@ const FilterForm = (props) => {
                     className='flex flex-col lg:flex-col sm:mx-5 gap-5 mt-6 lg:justify-start' 
                     onSubmit={(e) => { formData(e); }}
                 >
-                    <div className='mb-5 text-lg font-semibold'>Filter</div>
+                    <div className='mb-5 text-lg font-semibold dark:text-[#E0E0E0]'>Filter</div>
                     <div className='flex flex-col gap-3'>
-                        <label htmlFor="categorymenu" className="block text-sm font-medium text-gray-800">Select a Category</label>
+                        <label htmlFor="categorymenu" className="block text-sm font-medium text-gray-800 dark:text-[#E0E0E0] ">Select a Category</label>
                         <select 
                             name="categoryselection" 
                             id="categorymenu" 
-                            className="border border-gray-400 rounded h-10 pl-3 outline-none truncate" 
+                            className="border border-gray-400 rounded h-10 pl-3 outline-none truncate dark:bg-[#2C2C2C] dark:text-[#E0E0E0] dark:border-none" 
                             defaultValue="None"
                         >
                             <option value="None">None</option>
@@ -55,8 +55,8 @@ const FilterForm = (props) => {
                     </div>
                     <hr className='hidden lg:block' />
                     <div className='mt-4'>
-                        <label htmlFor="minmax-range" className="block mb-2 text-sm font-medium text-gray-800">Current Bid at range: </label>
-                        <p>
+                        <label htmlFor="minmax-range" className="block mb-2 text-sm font-medium text-gray-800 dark:text-[#E0E0E0]">Current Bid at range: </label>
+                        <p className='dark:text-[#E0E0E0]'>
                             {rangeValue === -1 ? 'No range set' : `${rangeValue} - ${(rangeValue + 500) === 10000 ? '10000+' : (rangeValue + 500)}`}
                         </p>
                         <input 
@@ -67,39 +67,39 @@ const FilterForm = (props) => {
                             max="9500" 
                             name='rangeofprice' 
                             onChange={(e) => { setRangeValue(Number(e.target.value)) }} 
-                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-[#2C2C2C] dark:text-[#E0E0E0]"
                         />
                         <hr />
                     </div>
                     <div id='auctiontimeleft' className='mt-6'>
-                        <label htmlFor="auctiontimeleft" className="block mb-2 text-sm font-medium text-gray-800">Time Left in Auction:</label>
+                        <label htmlFor="auctiontimeleft" className="block mb-2 text-sm font-medium text-gray-800 dark:text-[#E0E0E0]">Time Left in Auction:</label>
                         <div className='pl-3'>
                             <div className='flex flex-col gap-2'>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="None" name='auctiontimefilter' id='None' />
                                     None
                                 </label>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="6 -" name='auctiontimefilter' id='lessthan6' />
                                     Less than 6 Hours
                                 </label>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="12 -" name='auctiontimefilter' id='lessthan12' />
                                     Less than 12 Hours
                                 </label>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="24 -" name='auctiontimefilter' id='lessthan24' />
                                     Less than 24 Hours
                                 </label>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="48 -" name='auctiontimefilter' id='lessthan48' />
                                     Less than 2 Days
                                 </label>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="168 -" name='auctiontimefilter' id='lessthan168' />
                                     Less than 7 Days
                                 </label>
-                                <label className='flex items-center gap-2'>
+                                <label className='flex items-center gap-2 dark:text-[#E0E0E0]'>
                                     <input type="radio" value="168 +" name='auctiontimefilter' id='morethan168' />
                                     More than 7 Days
                                 </label>
@@ -110,7 +110,7 @@ const FilterForm = (props) => {
                         <input 
                             type="submit" 
                             value="Apply Filters"  
-                            className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-md text-sm px-5 py-2.5 mb-2"
+                            className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 font-medium rounded-md text-sm px-5 py-2.5 mb-2 dark:bg-[#2ABB7F] dark:text-[#091E42]"
                         />
                     </div>
                 </form>

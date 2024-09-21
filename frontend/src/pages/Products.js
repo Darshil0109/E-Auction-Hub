@@ -111,7 +111,7 @@ const Products = () => {
     return (
         <>
             <Navbar links={['', 'about', 'services', 'help']} navs={['Home', 'About', 'Services', 'Help']} />
-            <div className='flex flex-col lg:flex-row justify-evenly items-center lg:items-start bg-[#f3f4f6]'>
+            <div className='flex flex-col lg:flex-row justify-evenly items-center lg:items-start bg-[#f3f4f6] dark:bg-[#121212]'>
                 <FilterForm products={products} categories={category} updateFilterData={updateFilterData} updateFilterCriteria={updateFilterCriteria} />
                 {(fetched && filteredProducts.length === 0 ? (
                     <div className="border-l border-l-gray-500 flex w-full lg:w-4/5 h-screen justify-center items-center bg-gray-100">

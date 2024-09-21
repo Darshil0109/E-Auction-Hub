@@ -9,7 +9,7 @@ const Hero = React.lazy(()=> import('../components/Hero'));
 const Landing = () => {
   
   return (
-    <div className='bg-[#f3f4f6]'>
+    <div className='bg-[#f3f4f6]"'>
         <Suspense fallback = {<div> </div>}>
           <Navbar links={['products','about','services','help']} navs={['Auctions','About','Services','Help'] }/>
           <Hero/>

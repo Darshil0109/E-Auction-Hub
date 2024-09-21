@@ -18,7 +18,7 @@ const App = () => {
     return (
         <>
             <Router>
-                <Suspense>
+                <Suspense fallback={<div className='bg-gray-100  dark:bg-[#121212]'></div>}>
                     <Routes>
                         <Route path="/" element={<Landing />} />
                         <Route path="/products" element={<Products />} />
