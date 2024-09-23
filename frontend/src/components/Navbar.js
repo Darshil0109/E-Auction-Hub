@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTokenData, getUserInfoById, isUserAuthenticated } from '../services/apiServices';
 import { Link } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 const Navbar = (props) => {
   const handleClick = () => {
     if (props.isAuthenticated) {
-      localStorage.removeItem('access_token');
+      Cookies.remove('data');
     }
   };
   
@@ -26,7 +26,8 @@ const Navbar = (props) => {
   })
   useEffect(()=>{
     const getData = async()=>{
-      const token = localStorage.getItem("access_token");
+
+      const token = JSON.parse(Cookies.get('data') || '{}').access_token;
       const user = fetchTokenData(token);
       const userinfo=await getUserInfoById(user.user_id)
       setUserInfo(userinfo[0] || null)

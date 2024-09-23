@@ -6,6 +6,7 @@ import {
   isUserAuthenticated,
   placeItemToAuction,
 } from "../services/apiServices";
+import Cookies from "js-cookie";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const ProductForm = () => {
@@ -26,7 +27,7 @@ const ProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("access_token");
+    const token = JSON.parse(Cookies.get('data') || '{}').access_token;
     const user = fetchTokenData(token);
     var title = e.target.title.value;
     var description = e.target.description.value;

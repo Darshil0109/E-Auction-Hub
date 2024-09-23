@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import Navbar from "./Navbar";
 import { Navigate, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 const apiToken = process.env.REACT_APP_API_TOKEN;
 const InformationForm = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -21,7 +22,7 @@ const InformationForm = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const token = localStorage.getItem("access_token");
+      const token = JSON.parse(Cookies.get('data') || '{}').access_token;
       const user = fetchTokenData(token);
       const userinfo = await getUserInfoById(user.user_id);
       const data = await getUserById(user.user_id);

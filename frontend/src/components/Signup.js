@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import { getUsernames, isUserAuthenticated, setDefaultUserInfo, signUpUserData } from '../services/apiServices';
 import { Link, useNavigate } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -95,7 +95,10 @@ const Signup = () => {
     
             if (response.status===200){
                 setDefaultUserInfo(response.data.access)
-                localStorage.setItem('access_token', response.data.access);
+                const cookieData = { access_token: response.data.access };
+                // Set the cookie named 'data' with the cookieData object
+                Cookies.set('data', JSON.stringify(cookieData), { expires: 1 });
+
                 window.location.href='/'
             }
         }
@@ -134,14 +137,14 @@ const Signup = () => {
                     <label htmlFor="firstname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >
                     First Name
                     </label>
-                    <input type="text" id="firstname" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5" placeholder="John" required />
+                    <input type="text" id="firstname" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " placeholder="Darshil" required />
 
                 </div>
                 <div>
                     <label htmlFor="lastname" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >
                     Last Name
                     </label>
-                    <input type="text" id="lastname" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5" placeholder="Doe" required />
+                    <input type="text" id="lastname" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  p-2.5 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " placeholder="Patel" required />
 
                 </div>
             </div>
@@ -149,21 +152,21 @@ const Signup = () => {
             <label htmlFor="username" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >
              username
             </label>
-            <input type="text" id="username" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="johndoe123" onChange={handleUsername} required />
+            <input type="text" id="username" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " placeholder="darshil123" onChange={handleUsername} required />
             <p className={`text-sm font-medium ${((usernameMessage==='Username is Valid') ? ' text-green-400' : 'text-red-400')} `}>{usernameMessage}</p>
           </div>
             <div className="mb-5">
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >
               Your email
             </label>
-            <input type="email" id="email" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@swiftbids.com" required />
+            <input type="email" id="email" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " placeholder="name@swiftbids.com" required />
           </div>
             <div className="mb-5 relative" >
                 <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >
                 Your password
                 </label>
-                <input type={passwordVisible ? "text" : "password"} id="password" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10" required />
-                <i onClick={togglePasswordVisibility} data-tooltip-target="tooltip-default" className={`absolute top-10 right-3 text-gray-500 cursor-pointer ${ passwordVisible ? "fa fa-eye-slash" : "fa fa-eye"}`}></i>
+                <input type={passwordVisible ? "text" : "password"} id="password" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " required />
+                <i onClick={togglePasswordVisibility} data-tooltip-target="tooltip-default" className={`absolute top-10 right-3 text-gray-500 cursor-pointer dark:text-[#E0E0E0] ${ passwordVisible ? "fa fa-eye-slash" : "fa fa-eye"}`}></i>
                 <p className="text-gray-700 text-sm dark:text-[#B3B3B3]">
                     <span className="font-bold">•</span> At least 8 characters,At most 16 characters, includes one uppercase letter, one number, and one special character from @, #, $.
                 </p>

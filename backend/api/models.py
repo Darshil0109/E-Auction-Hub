@@ -3,13 +3,15 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 # Create your models here.
+
+# Category model
 class Category(models.Model):
     category=models.CharField(max_length=30)
 
     def __str__(self):
         return self.category
 
-
+# Items model
 class Item(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -28,13 +30,14 @@ class Item(models.Model):
         ('cancelled', 'Cancelled')
     ], default='active')
 
-
+# Bid Model
 class Bid(models.Model):
     bid_amount = models.DecimalField(max_digits=10, decimal_places=2)
     bid_time = models.DateTimeField()
     item_id = models.ForeignKey(Item, on_delete=models.CASCADE)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
+# UserInformation Model
 class UserInformation(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     profileimage_url = models.ImageField(upload_to='profile_images/', null=True, blank=True)

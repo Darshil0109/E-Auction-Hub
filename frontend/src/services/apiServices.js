@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import Cookies from 'js-cookie';
 
 const apiToken = process.env.REACT_APP_API_TOKEN;
 
@@ -177,10 +178,10 @@ const signUpUserData= async(user)=>{
 }
 
 
-// check if user have token in browser's local storage
+// check if user have token in browser's cookie
 const isUserAuthenticated = ()=>{
     try {
-        return localStorage.getItem('access_token') ? localStorage.getItem('access_token') : null
+        return Cookies.get('data') ? JSON.parse(Cookies.get('data')).access_token: null;
     } catch (error) {
         console.log(error.message);
     }

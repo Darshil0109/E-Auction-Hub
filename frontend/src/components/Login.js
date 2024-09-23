@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isUserAuthenticated, loginUserData } from "../services/apiServices";
 import { Link, useNavigate } from "react-router-dom";
-
+import Cookies from 'js-cookie';
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -29,7 +29,11 @@ const Login = () => {
     let response=await loginUserData(email,password)
     
     if (response.status===200){
-      localStorage.setItem('access_token', response.data.access);
+        const cookieData = { access_token: response.data.access };
+        // Set the cookie named 'data' with the cookieData object
+        Cookies.set('data', JSON.stringify(cookieData), { expires: 1 });
+
+
       window.location.href='/'
     }
     else if (response.status === 401){
@@ -54,7 +58,7 @@ const Login = () => {
             <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >
               Your email
             </label>
-            <input type="email" id="email" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " placeholder="name@flowbite.com" required />
+            <input type="email" id="email" className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-[#2C2C2C] dark:text-[#E0E0E0] " placeholder="name@swiftbids.com" required />
           </div>
           <div className="mb-5 relative">
             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-[#B3B3B3]" >

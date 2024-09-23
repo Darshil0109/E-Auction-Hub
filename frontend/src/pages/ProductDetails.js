@@ -12,6 +12,8 @@ import {
 import { Navigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 
+import Cookies from 'js-cookie';
+
 const ProductDetails = () => {
   const { product_id } = useParams();
   const [product, setProducts] = useState([]);
@@ -110,7 +112,7 @@ const ProductDetails = () => {
 
   const handleBid = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("access_token");
+    const token = JSON.parse(Cookies.get('data') || '{}').access_token;
     const user = fetchTokenData(token);
     if (sellerName === user.username) {
       return alert("you can't place bid on your own auction");

@@ -126,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+# Indian Time zone to get time in India's time
 TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
@@ -144,10 +145,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# This added Manually
+# All Origins to Request for Data
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
-
+# folder in which image files should be stored 
 MEDIA_URL = '/media/'
+# connect to that folder at Root Directory of project
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")

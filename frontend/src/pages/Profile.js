@@ -12,6 +12,8 @@ import {
   getAuctions,
 } from "../services/apiServices";
 
+import Cookies from 'js-cookie';
+
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null);
   const [userData, setUserData] = useState(null);
@@ -23,7 +25,7 @@ const Profile = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const token = localStorage.getItem("access_token");
+      const token = JSON.parse(Cookies.get('data') || '{}').access_token;
       const user = fetchTokenData(token);
       const userinfo = await getUserInfoById(user.user_id);
       const data = await getUserById(user.user_id);
@@ -74,7 +76,7 @@ const Profile = () => {
   };
 
   const handleClick = () => {
-    localStorage.removeItem("access_token");
+    Cookies.remove('data');
   };
 
   if (!isUserAuthenticated()) {
