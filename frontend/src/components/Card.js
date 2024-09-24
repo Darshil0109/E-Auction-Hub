@@ -3,7 +3,7 @@ import '../pages/Products.css'
 import { useNavigate } from 'react-router-dom';
 
 
-
+// function to change value to different parameters like 1.23 Million or 121.56 k with 2 decimal digits
 const formatValue = (value) =>{
   if (value >= 1000000){
     value= (value/1000000).toFixed(2);
@@ -18,7 +18,9 @@ const formatValue = (value) =>{
     }
 }
 
+// Card componenet to load card
 const Card = (props) => {
+  // to navigate to different pages
   const navigate = useNavigate();
   const handleProductDetails = (product) =>{
     navigate(`/products/${product.id}`);
@@ -33,6 +35,7 @@ const Card = (props) => {
         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
     </div>
+    {/* Timer inside card to show time left for auction to end*/}
     <div className="countdown-timer countdown-timer-fade absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white bg-opacity-75 p-2 rounded-md text-black transition-opacity duration-300 dark:bg-[#37474F] dark:bg-opacity-90 dark:p-2 dark:rounded-md dark:text-[#E0E0E0] dark:transition-opacity dark:duration-300
 ">
       <ul className="flex space-x-1 text-center">
@@ -60,6 +63,7 @@ const Card = (props) => {
   </div>
   <p className="text-md sm:text-lg md:text-xl px-2 truncate font-semibold dark:text-[#E0E0E0]">{props.product.title}</p>
   <div className="flex mt-2 justify-between items-center px-2 gap-2">
+    {/* show current bid if already bid placed and if bid is not placed then show starting bid */}
     <div>
       {(props.product.current_bid) ? 
         <>

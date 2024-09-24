@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 
-
+// About component only frontend no special backend data is here
 const About = () => {
   return (
     <>

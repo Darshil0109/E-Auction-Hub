@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-
+// Services component only frontend no special backend data is here
 const Services = () => {
   return (
     <>

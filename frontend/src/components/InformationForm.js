@@ -12,11 +12,18 @@ import Navbar from "./Navbar";
 import { Navigate, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 const apiToken = process.env.REACT_APP_API_TOKEN;
+
+// Information Form for More Information From user 
 const InformationForm = () => {
+  // to store more info of user
   const [userInfo, setUserInfo] = useState(null);
+  // to store Basic info given by user at signup  
   const [userData, setUserData] = useState(null);
+  // to check if all data is fetched or not
   const [fetched, setFetched] = useState(false);
+  // to store the message like username exist or valid username at onChange event on username
   const [usernameMessage, setUsernameMessage] = useState("");
+  // to store all usernames from database
   const [usernames, setUsernames] = useState();
   const navigate = useNavigate();
 
@@ -33,14 +40,17 @@ const InformationForm = () => {
       setUserInfo(userinfo[0] || null);
     };
 
+    // if user is authenticated then get All data from database
     if (isUserAuthenticated()) {
       getData();
     }
   }, []);
 
+  // return to /auth/login url endpoint if user is not authenticated
   if (!isUserAuthenticated()) {
     return <Navigate to="/auth/login" />;
   }
+  // handle username while changing name
   const handleUsername = async (event) => {
     let username = event.target.value.toLowerCase();
 
@@ -59,6 +69,7 @@ const InformationForm = () => {
     }
   };
 
+  // to get all information of user from Information Form and change it by sending put request at database server
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -139,6 +150,7 @@ const InformationForm = () => {
     }
   };
 
+  // if data is fetched then show Form
   return !fetched ? (
     <></>
   ) : (

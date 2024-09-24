@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { handleFilterSubmit } from '../services/apiServices';
 
+// Component to get the data that what customer is looking for by showing form for Filter by values like less than 2 days left for auction ends
 const FilterForm = (props) => {
+    // for range input
     const [rangeValue, setRangeValue] = useState(-1);
+    // for filter form to open and close for smaller screens
     const [isOpen, setIsOpen] = useState(false);
 
+    // toggle on off to filter form for smaller screens
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const formData = (event) => {
         event.preventDefault();
+        // get form data
         const formData = new FormData(event.target);
         const data = Object.fromEntries(formData.entries());
+        // update products shown according to selected products
         props.updateFilterCriteria(data);
         handleFilterSubmit(data, props.products, props.categories, props.updateFilterData);
     };
@@ -18,6 +24,7 @@ const FilterForm = (props) => {
     return (
         <div className='w-full lg:w-1/5 bg-[#f3f4f6] items-center lg:border-none dark:bg-[#121212]'>
             <div className='float-right m-5'>
+                {/* button to toggle filter form for smaller screens */}
             <button onClick={toggleMenu} className="lg:hidden w-full flex gap-2 items-center sm:w-28 m-0 text-white bg-purple-700 hover:bg-purple-800 focus:outline-none font-medium rounded text-xs px-2 py-1.5 mb-4">
                 {isOpen ? 'Hide Filters' : 'Show Filters'}
                 <i className="fas fa-solid fa-sort-down"></i>
@@ -26,7 +33,7 @@ const FilterForm = (props) => {
             </div>
 
             
-            {/* Full Menu for screens >=1024px */}
+            {/* Full Menu for screens >=1024px  and hidden and block by toggle button for screens<=1024px*/}
             <div className={`lg:block ${isOpen ? 'block' : 'hidden'}`}>
                 <form 
                     className='flex flex-col lg:flex-col sm:mx-5 gap-5 mt-6 lg:justify-start' 

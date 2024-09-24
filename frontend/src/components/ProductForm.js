@@ -9,6 +9,7 @@ import {
 import Cookies from "js-cookie";
 import { Navigate, useNavigate } from "react-router-dom";
 
+// Form to Add Own Products for auction
 const ProductForm = () => {
   const [categoryData, setCategory] = useState([]);
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const ProductForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // get Data from token stored inside cookie
     const token = JSON.parse(Cookies.get('data') || '{}').access_token;
     const user = fetchTokenData(token);
     var title = e.target.title.value;
@@ -36,6 +38,7 @@ const ProductForm = () => {
     var starting_bid = e.target.starting_bid.value;
     var date = e.target.date.value;
     var time = e.target.time.value;
+    // validate category selection
     if (category === "defaultCategory") {
       alert("Please select a valid category!");
       return;

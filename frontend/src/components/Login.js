@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import { isUserAuthenticated, loginUserData } from "../services/apiServices";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
+// login component
 const Login = () => {
+  // to toggle passwordVisible when user clicks on EYE icon at password field 
   const [passwordVisible, setPasswordVisible] = useState(false);
+  // to check if terms are accepted by user
   const [termsAccepted, setTermsAccepted] = useState(false);
+  // to check if user clicked submit button if clicked then disable so 2 times not get clicked
   const [isClicked, setIsClicked] = useState(false);
   const navigate=useNavigate()
   
   useEffect(() => {
+    // if authenticated user is coming then send him back
     if (isUserAuthenticated()) {
       navigate('/profile')
     }
@@ -29,12 +34,11 @@ const Login = () => {
     let response=await loginUserData(email,password)
     
     if (response.status===200){
-        const cookieData = { access_token: response.data.access };
-        // Set the cookie named 'data' with the cookieData object
-        Cookies.set('data', JSON.stringify(cookieData), { expires: 1 });
-
-
-      window.location.href='/'
+      const cookieData = { access_token: response.data.access };
+      // Set the cookie named 'data' with the cookieData object
+      Cookies.set('data', JSON.stringify(cookieData), { expires: 1 });
+      // Navigate to Landing page
+      navigate('/profile')
     }
     else if (response.status === 401){
       alert('Invalid Email-Id or Password');

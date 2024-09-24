@@ -49,17 +49,23 @@ class LoginAuthTokenViewSet(APIView):
     
     authentication_classes = (TokenAuthentication,)
     def post(self, request):
+        # get data came from request
         email = request.data.get('email')
         password = request.data.get('password')
         if not email or not password:
             return Response({"error": "Email and password are required"}, status=status.HTTP_400_BAD_REQUEST)
         try:
+            # get User data if any email is there
             user = User.objects.get(email=email)
+        #  handle Exception
         except User.DoesNotExist:
             return Response({"error": "Invalid email or password"}, status=status.HTTP_401_UNAUTHORIZED)
+        # authenticate that the user got from email has same password  or not
         user = authenticate(username=user.username, password=password)
+        # Generate RefreshToken for the given user 
         if user is not None:
             refresh = RefreshToken.for_user(user)
+            # add username and email into refresh token
             refresh['username'] = user.username
             refresh['email'] = email
             return Response({

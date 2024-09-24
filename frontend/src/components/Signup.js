@@ -2,6 +2,7 @@ import React,{useEffect, useState} from 'react'
 import { getUsernames, isUserAuthenticated, setDefaultUserInfo, signUpUserData } from '../services/apiServices';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+// signup component same as login component
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -85,6 +86,7 @@ const Signup = () => {
         }
 
         if (validData){
+            // signup user 
             let response=await signUpUserData({
                 'username':username,
                 'email':email,
@@ -94,12 +96,13 @@ const Signup = () => {
             })
     
             if (response.status===200){
+                // set more information of use like N/A that it is still not provided 
                 setDefaultUserInfo(response.data.access)
                 const cookieData = { access_token: response.data.access };
                 // Set the cookie named 'data' with the cookieData object
                 Cookies.set('data', JSON.stringify(cookieData), { expires: 1 });
 
-                window.location.href='/'
+                navigate('/profile')
             }
         }
         else{

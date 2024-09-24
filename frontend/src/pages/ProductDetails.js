@@ -11,9 +11,10 @@ import {
 } from "../services/apiServices";
 import { Navigate, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
-
 import Cookies from 'js-cookie';
 
+
+// Product Details page
 const ProductDetails = () => {
   const { product_id } = useParams();
   const [product, setProducts] = useState([]);
@@ -62,6 +63,7 @@ const ProductDetails = () => {
     }
   };
   useEffect(() => {
+    // timer to change every seconds 
     if (timingProduct.length !== 0) {
       const updateTimers = () => {
         setTimers(
@@ -95,6 +97,7 @@ const ProductDetails = () => {
   if (!isUserAuthenticated()) {
     return <Navigate to="/auth/login" />;
   }
+  // to change iso format to days,hours,minutes,seconds
   const formatTime = (timeLeft) => {
     const totalSeconds = Math.floor(timeLeft / 1000);
     const days = Math.floor(totalSeconds / (3600 * 24));
@@ -110,8 +113,10 @@ const ProductDetails = () => {
     : { days: 0, hours: 0, minutes: 0, remainingSeconds: 0 };
   // ;
 
+  // place Bid when a user wants to place bid
   const handleBid = async (e) => {
     e.preventDefault();
+    // get access_token and user data from that token
     const token = JSON.parse(Cookies.get('data') || '{}').access_token;
     const user = fetchTokenData(token);
     if (sellerName === user.username) {
@@ -164,7 +169,7 @@ const ProductDetails = () => {
               />
             </div>
             <div className="grid row-start-2 row-end-5 sm:row-end-4 md:row-start-1 md:row-end-3 md:justify-evenly">
-              <div className="pt-1 px-5 sm:pt-5 sm:px-7 box-border bg-[#262626] rounded">
+              <div className="pt-1 px-5 sm:pt-5 sm:px-7 box-border dark:bg-[#262626] rounded">
                 <p className="mt-4 text-3xl font-semibold dark:text-[#E0E0E0]">
                   {product[0].title}
                 </p>

@@ -1,5 +1,6 @@
 import React from "react";
 
+// card skeleton shows up when Card data is loading
 const CardSkeleton = (props) => {
   return (
     <div className="w-full md:w-64">

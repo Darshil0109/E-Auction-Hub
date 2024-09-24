@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Terms = () => {
+  // terms for users
   return (
     <div className="terms-container p-4 max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold mb-4">Terms and Conditions</h1>

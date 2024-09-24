@@ -23,6 +23,7 @@ const Profile = () => {
   const [auctionsWon, setAuctionsWon] = useState([]);
   const [auctionsSold, setAuctionsSold] = useState([]);
 
+  // Profile page
   useEffect(() => {
     const getData = async () => {
       const token = JSON.parse(Cookies.get('data') || '{}').access_token;
@@ -32,14 +33,17 @@ const Profile = () => {
       const bids = await getBidsById(user.user_id);
       const categorydata = await fetchAuctionCategory();
       var auctions = await getAuctions();
+      // sort by latest time 
       auctions = auctions.sort(
         (a, b) => new Date(b.end_time) - new Date(a.end_time)
       );
+      // get all auction user sold 
       var soldAuctions = auctions
-        .filter((value) => {
-          return value.seller === user.user_id;
-        })
-        .slice(0, 3);
+      .filter((value) => {
+        return value.seller === user.user_id;
+      })
+      .slice(0, 3);
+      // get all auction user won 
       auctions = auctions
         .filter((value) => {
           return value.winner === user.user_id;
@@ -48,6 +52,7 @@ const Profile = () => {
       setAuctionsSold(soldAuctions);
       setAuctionsWon(auctions);
       setCategories(categorydata);
+      // get all bids for bid history from bid model of database
       const items = await Promise.all(
         bids.map(async (bid) => {
           const item = await getItemById(bid.item_id);
@@ -79,6 +84,7 @@ const Profile = () => {
     Cookies.remove('data');
   };
 
+  // navigate user to profile page if user is not authenticated
   if (!isUserAuthenticated()) {
     return <Navigate to="/auth/login" />;
   }

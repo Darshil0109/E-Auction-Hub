@@ -50,6 +50,7 @@ const Products = () => {
     }, []);
     useEffect(() => {
         if (fetched) {
+            // if products/category changes then automatically filter that products if already filter assigned
             handleFilterSubmit(filterCriteria, products, category, updateFilterData);
         }
     }, [fetched, filterCriteria, products, category]);
@@ -58,6 +59,7 @@ const Products = () => {
         setFilteredProducts(updatedData);
     };
 
+    // change status of auction items to completed from active to remove it from products
     const changeStatus = async (product) => {
         const updatedData = await updateProductStatus(product);
         if (updatedData) {
@@ -68,6 +70,7 @@ const Products = () => {
     
     
     useEffect(() => {
+        // change timer at every second for all products and store into list of Timers so every seconds Timer state is changing 
         if (products.length > 0) {
             const updateTimers = () => {
                 setTimers(products.map((product) => {
@@ -92,6 +95,7 @@ const Products = () => {
         }
     }, [products]);
 
+    // change iso string to days,hours,minutes,seconds
     const formatTime = (timeLeft) => {
         const totalSeconds = Math.floor(timeLeft / 1000);
         const days = Math.floor(totalSeconds / (3600 * 24));
@@ -132,7 +136,7 @@ const Products = () => {
                         return (
                         <div key={product.id} className="w-full">
                             <Suspense fallback={<CardSkeleton key={product.id} />}>
-                            <Card product={product} days={days} hours={hours} minutes={minutes} remainingSeconds={remainingSeconds} />
+                                <Card product={product} days={days} hours={hours} minutes={minutes} remainingSeconds={remainingSeconds} />
                             </Suspense>
                         </div>
                         );

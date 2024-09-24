@@ -13,23 +13,24 @@ const fetchAuctionItems = async () => {
                 'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
             }
         });
+        // filter auctions that are active 
         const activeitems=await response.data.filter((p)=> {return (p.status==='active' ? true:false)})
         
         
         
-        return activeitems; // Return the actual data
+        return activeitems; 
     } catch (error) {
         console.error('Error occurred while fetching auction items:', error);
-        throw error; // Re-throw the error for handling in the calling code
+        throw error; 
     }
 };
 
-//fetch all categories auction items can have
+//fetch all categories of auction items can have
 const fetchAuctionCategory = async () => {
     try {
         const response = await axios.get('http://127.0.0.1:8000/api/category/',{
             headers: {
-                'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
+                'Authorization': `Token ${apiToken}`  // Include the token (which is superuser's token) in the Authorization header
             }
         });
         return response.data; 
@@ -39,11 +40,12 @@ const fetchAuctionCategory = async () => {
     }
 };
 
+// Get Categoryname by category-id
 const getCategoryNameById = async (id) => {
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/category/${id}/`,{
             headers: {
-                'Authorization': `Token ${apiToken}`  // Include the token in the Authorization header
+                'Authorization': `Token ${apiToken}`  
             }
         });
         
@@ -55,7 +57,7 @@ const getCategoryNameById = async (id) => {
     }
 };
 
-
+// function to filter sent by user using filter form the default filter criteria will not affect products list
 const handleFilterSubmit = (data,products,categories,updateFilterData) =>{
     try {
         let updatedProducts = [...products];
@@ -192,6 +194,7 @@ const fetchTokenData=(token)=>{
     return  jwtDecode(token)
 }
 
+// function to get all users of database
 const getUsers = async () =>{
     try {
         const response= await axios.get('http://127.0.0.1:8000/api/users/',{
@@ -204,6 +207,7 @@ const getUsers = async () =>{
         console.log("error fetching users",error.message);  
     }
 }
+// get all auction items from database
 const getAuctions = async () =>{
     try {
         const response= await axios.get('http://127.0.0.1:8000/api/items/',{
@@ -218,7 +222,7 @@ const getAuctions = async () =>{
 }
 
 
-
+// get user information from user id
 const getUserInfoById = async (id) => {
     try {
         const response = await axios.get('http://127.0.0.1:8000/api/userinfo/', {
@@ -235,6 +239,7 @@ const getUserInfoById = async (id) => {
         return error;
     }
 }
+// get basic user data from user-id
 const getUserById = async (id) => {
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/users/${id}/`, {
@@ -249,6 +254,8 @@ const getUserById = async (id) => {
         return error;
     }
 }
+
+// get all Bids of perticular user id 
 const getBidsById = async (id) => {
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/bids/`, {
@@ -265,6 +272,7 @@ const getBidsById = async (id) => {
         return error;
     }
 }
+// get auction items by item-id
 const getItemById = async (id) => {
     try {
         const response = await axios.get(`http://127.0.0.1:8000/api/items/${id}/`, {
@@ -282,7 +290,7 @@ const getItemById = async (id) => {
     }
 }
 
-
+// get all usernames from database
 const getUsernames = async () =>{
     try{
         var users = await getUsers() 
@@ -295,6 +303,7 @@ const getUsernames = async () =>{
     }
 }
 
+// setting default user info if user hasn't set that
 const setDefaultUserInfo = async (token) =>{
     const user = fetchTokenData(token);
     
@@ -324,7 +333,7 @@ const setDefaultUserInfo = async (token) =>{
     );
     return response.status
 }
-
+// function to place bid on auction item and become current bidder
 const placeAuctionBid = async (product,bid_amount,userid) =>{
     try {
         
@@ -355,6 +364,7 @@ const placeAuctionBid = async (product,bid_amount,userid) =>{
         throw error; // Re-throw the error for handling in the calling code
     }
 }
+// to add the data of Bid user recently placed on item
 const addBidToModel = async (product,bid_amount,userid) =>{
     try {
         
@@ -377,6 +387,7 @@ const addBidToModel = async (product,bid_amount,userid) =>{
     }
 }
 
+// to place item for auction by any user
 const placeItemToAuction=async(item,sellerid)=>{
     try {
         const response = await axios.post(`http://127.0.0.1:8000/api/items/`, {

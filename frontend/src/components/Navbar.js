@@ -26,10 +26,13 @@ const Navbar = (props) => {
   })
   useEffect(()=>{
     const getData = async()=>{
-
+      // get access_token strored inside cookie named data
       const token = JSON.parse(Cookies.get('data') || '{}').access_token;
+      // get data from token using fetchTokenData
       const user = fetchTokenData(token);
+      // get user information from user id
       const userinfo=await getUserInfoById(user.user_id)
+      // if user hadn't added more information about him then show null so that he could see in profile page that some of his information are remains
       setUserInfo(userinfo[0] || null)
     }
     if (isUserAuthenticated()) {
@@ -37,11 +40,14 @@ const Navbar = (props) => {
     }
   },[])
   const [darkMode, setDarkMode] = useState(() => {
+    // get dark-mode from localstorage to change background for dark-mode
     const storedMode = localStorage.getItem('dark-mode');
+    // value stored inside localstorage is string that is why compare here 
     return storedMode === 'true';
   });
 
   useEffect(() => {
+    // Default setup by tailwind to add class named dark: to setup color for element like bg-white dark:bg-[#121212]
     if (darkMode) {
       document.documentElement.classList.add('dark');
     } else {
@@ -52,6 +58,7 @@ const Navbar = (props) => {
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => {
       const newMode = !prevMode;
+      // set dark mode status every time user clicks on dark mode icon
       localStorage.setItem('dark-mode', newMode.toString());
       return newMode;
     });

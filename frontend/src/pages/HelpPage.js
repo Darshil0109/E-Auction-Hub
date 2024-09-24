@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+// Help component only frontend no special backend data is here
 const HelpPage = () => {
   return (
     <div className='bg-[#f3f4f6] dark:bg-[#121212]'>

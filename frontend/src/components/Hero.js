@@ -3,6 +3,7 @@ import './Hero.css'
 import { Link } from 'react-router-dom';
 
 const Hero = () => {
+  // Hero Component
   return (
     <>
       <div className="pt-32 lg:pt-16 dark:bg-[#121212]">

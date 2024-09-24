@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
+    // show Footer 
     <footer className="bg-slate-100/60 dark:bg-[#181818]">
   <div className="max-w-screen-xl mx-auto p-4 py-6 lg:py-8">
     <div className="flex flex-col lg:flex-row lg:justify-between">
